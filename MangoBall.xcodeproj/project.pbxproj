@@ -1,0 +1,468 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B50FAA4B1781F45900F03754 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50FAA4A1781F45900F03754 /* UIKit.framework */; };
+		B50FAA4D1781F45900F03754 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50FAA4C1781F45900F03754 /* Foundation.framework */; };
+		B50FAA4F1781F45900F03754 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50FAA4E1781F45900F03754 /* CoreGraphics.framework */; };
+		B50FAA551781F45900F03754 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B50FAA531781F45900F03754 /* InfoPlist.strings */; };
+		B50FAA571781F45900F03754 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B50FAA561781F45900F03754 /* main.m */; };
+		B50FAA5B1781F45900F03754 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B50FAA5A1781F45900F03754 /* AppDelegate.m */; };
+		B50FAA5D1781F45900F03754 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B50FAA5C1781F45900F03754 /* Default.png */; };
+		B50FAA5F1781F45900F03754 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B50FAA5E1781F45900F03754 /* Default@2x.png */; };
+		B50FAA611781F45900F03754 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B50FAA601781F45900F03754 /* Default-568h@2x.png */; };
+		B50FAA641781F45900F03754 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50FAA621781F45900F03754 /* MainStoryboard.storyboard */; };
+		B50FAA671781F45900F03754 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50FAA661781F45900F03754 /* ViewController.m */; };
+		B50FAA6F1781F45900F03754 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50FAA6E1781F45900F03754 /* SenTestingKit.framework */; };
+		B50FAA701781F45900F03754 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50FAA4A1781F45900F03754 /* UIKit.framework */; };
+		B50FAA711781F45900F03754 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50FAA4C1781F45900F03754 /* Foundation.framework */; };
+		B50FAA791781F45900F03754 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B50FAA771781F45900F03754 /* InfoPlist.strings */; };
+		B50FAA7C1781F45900F03754 /* MangoBallTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B50FAA7B1781F45900F03754 /* MangoBallTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B50FAA721781F45900F03754 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B50FAA3F1781F45900F03754 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B50FAA461781F45900F03754;
+			remoteInfo = MangoBall;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B50FAA471781F45900F03754 /* MangoBall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangoBall.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B50FAA4A1781F45900F03754 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B50FAA4C1781F45900F03754 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B50FAA4E1781F45900F03754 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B50FAA521781F45900F03754 /* MangoBall-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MangoBall-Info.plist"; sourceTree = "<group>"; };
+		B50FAA541781F45900F03754 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B50FAA561781F45900F03754 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B50FAA581781F45900F03754 /* MangoBall-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MangoBall-Prefix.pch"; sourceTree = "<group>"; };
+		B50FAA591781F45900F03754 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B50FAA5A1781F45900F03754 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B50FAA5C1781F45900F03754 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		B50FAA5E1781F45900F03754 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		B50FAA601781F45900F03754 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B50FAA631781F45900F03754 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		B50FAA651781F45900F03754 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		B50FAA661781F45900F03754 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		B50FAA6D1781F45900F03754 /* MangoBallTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MangoBallTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B50FAA6E1781F45900F03754 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		B50FAA761781F45900F03754 /* MangoBallTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MangoBallTests-Info.plist"; sourceTree = "<group>"; };
+		B50FAA781781F45900F03754 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B50FAA7A1781F45900F03754 /* MangoBallTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MangoBallTests.h; sourceTree = "<group>"; };
+		B50FAA7B1781F45900F03754 /* MangoBallTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MangoBallTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B50FAA441781F45900F03754 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B50FAA4B1781F45900F03754 /* UIKit.framework in Frameworks */,
+				B50FAA4D1781F45900F03754 /* Foundation.framework in Frameworks */,
+				B50FAA4F1781F45900F03754 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B50FAA691781F45900F03754 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B50FAA6F1781F45900F03754 /* SenTestingKit.framework in Frameworks */,
+				B50FAA701781F45900F03754 /* UIKit.framework in Frameworks */,
+				B50FAA711781F45900F03754 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B50FAA3E1781F45900F03754 = {
+			isa = PBXGroup;
+			children = (
+				B50FAA501781F45900F03754 /* MangoBall */,
+				B50FAA741781F45900F03754 /* MangoBallTests */,
+				B50FAA491781F45900F03754 /* Frameworks */,
+				B50FAA481781F45900F03754 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B50FAA481781F45900F03754 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B50FAA471781F45900F03754 /* MangoBall.app */,
+				B50FAA6D1781F45900F03754 /* MangoBallTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B50FAA491781F45900F03754 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B50FAA4A1781F45900F03754 /* UIKit.framework */,
+				B50FAA4C1781F45900F03754 /* Foundation.framework */,
+				B50FAA4E1781F45900F03754 /* CoreGraphics.framework */,
+				B50FAA6E1781F45900F03754 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B50FAA501781F45900F03754 /* MangoBall */ = {
+			isa = PBXGroup;
+			children = (
+				B50FAA591781F45900F03754 /* AppDelegate.h */,
+				B50FAA5A1781F45900F03754 /* AppDelegate.m */,
+				B50FAA621781F45900F03754 /* MainStoryboard.storyboard */,
+				B50FAA651781F45900F03754 /* ViewController.h */,
+				B50FAA661781F45900F03754 /* ViewController.m */,
+				B50FAA511781F45900F03754 /* Supporting Files */,
+			);
+			path = MangoBall;
+			sourceTree = "<group>";
+		};
+		B50FAA511781F45900F03754 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B50FAA521781F45900F03754 /* MangoBall-Info.plist */,
+				B50FAA531781F45900F03754 /* InfoPlist.strings */,
+				B50FAA561781F45900F03754 /* main.m */,
+				B50FAA581781F45900F03754 /* MangoBall-Prefix.pch */,
+				B50FAA5C1781F45900F03754 /* Default.png */,
+				B50FAA5E1781F45900F03754 /* Default@2x.png */,
+				B50FAA601781F45900F03754 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B50FAA741781F45900F03754 /* MangoBallTests */ = {
+			isa = PBXGroup;
+			children = (
+				B50FAA7A1781F45900F03754 /* MangoBallTests.h */,
+				B50FAA7B1781F45900F03754 /* MangoBallTests.m */,
+				B50FAA751781F45900F03754 /* Supporting Files */,
+			);
+			path = MangoBallTests;
+			sourceTree = "<group>";
+		};
+		B50FAA751781F45900F03754 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B50FAA761781F45900F03754 /* MangoBallTests-Info.plist */,
+				B50FAA771781F45900F03754 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B50FAA461781F45900F03754 /* MangoBall */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B50FAA7F1781F45900F03754 /* Build configuration list for PBXNativeTarget "MangoBall" */;
+			buildPhases = (
+				B50FAA431781F45900F03754 /* Sources */,
+				B50FAA441781F45900F03754 /* Frameworks */,
+				B50FAA451781F45900F03754 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MangoBall;
+			productName = MangoBall;
+			productReference = B50FAA471781F45900F03754 /* MangoBall.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B50FAA6C1781F45900F03754 /* MangoBallTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B50FAA821781F45900F03754 /* Build configuration list for PBXNativeTarget "MangoBallTests" */;
+			buildPhases = (
+				B50FAA681781F45900F03754 /* Sources */,
+				B50FAA691781F45900F03754 /* Frameworks */,
+				B50FAA6A1781F45900F03754 /* Resources */,
+				B50FAA6B1781F45900F03754 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B50FAA731781F45900F03754 /* PBXTargetDependency */,
+			);
+			name = MangoBallTests;
+			productName = MangoBallTests;
+			productReference = B50FAA6D1781F45900F03754 /* MangoBallTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B50FAA3F1781F45900F03754 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Benjamin Taylor";
+			};
+			buildConfigurationList = B50FAA421781F45900F03754 /* Build configuration list for PBXProject "MangoBall" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B50FAA3E1781F45900F03754;
+			productRefGroup = B50FAA481781F45900F03754 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B50FAA461781F45900F03754 /* MangoBall */,
+				B50FAA6C1781F45900F03754 /* MangoBallTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B50FAA451781F45900F03754 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B50FAA551781F45900F03754 /* InfoPlist.strings in Resources */,
+				B50FAA5D1781F45900F03754 /* Default.png in Resources */,
+				B50FAA5F1781F45900F03754 /* Default@2x.png in Resources */,
+				B50FAA611781F45900F03754 /* Default-568h@2x.png in Resources */,
+				B50FAA641781F45900F03754 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B50FAA6A1781F45900F03754 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B50FAA791781F45900F03754 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B50FAA6B1781F45900F03754 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B50FAA431781F45900F03754 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B50FAA571781F45900F03754 /* main.m in Sources */,
+				B50FAA5B1781F45900F03754 /* AppDelegate.m in Sources */,
+				B50FAA671781F45900F03754 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B50FAA681781F45900F03754 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B50FAA7C1781F45900F03754 /* MangoBallTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B50FAA731781F45900F03754 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B50FAA461781F45900F03754 /* MangoBall */;
+			targetProxy = B50FAA721781F45900F03754 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B50FAA531781F45900F03754 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B50FAA541781F45900F03754 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B50FAA621781F45900F03754 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B50FAA631781F45900F03754 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		B50FAA771781F45900F03754 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B50FAA781781F45900F03754 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B50FAA7D1781F45900F03754 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B50FAA7E1781F45900F03754 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B50FAA801781F45900F03754 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MangoBall/MangoBall-Prefix.pch";
+				INFOPLIST_FILE = "MangoBall/MangoBall-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B50FAA811781F45900F03754 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MangoBall/MangoBall-Prefix.pch";
+				INFOPLIST_FILE = "MangoBall/MangoBall-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B50FAA831781F45900F03754 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MangoBall.app/MangoBall";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MangoBall/MangoBall-Prefix.pch";
+				INFOPLIST_FILE = "MangoBallTests/MangoBallTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		B50FAA841781F45900F03754 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MangoBall.app/MangoBall";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MangoBall/MangoBall-Prefix.pch";
+				INFOPLIST_FILE = "MangoBallTests/MangoBallTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B50FAA421781F45900F03754 /* Build configuration list for PBXProject "MangoBall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B50FAA7D1781F45900F03754 /* Debug */,
+				B50FAA7E1781F45900F03754 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B50FAA7F1781F45900F03754 /* Build configuration list for PBXNativeTarget "MangoBall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B50FAA801781F45900F03754 /* Debug */,
+				B50FAA811781F45900F03754 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B50FAA821781F45900F03754 /* Build configuration list for PBXNativeTarget "MangoBallTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B50FAA831781F45900F03754 /* Debug */,
+				B50FAA841781F45900F03754 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B50FAA3F1781F45900F03754 /* Project object */;
+}
