@@ -23,6 +23,9 @@
 		B50FAA711781F45900F03754 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50FAA4C1781F45900F03754 /* Foundation.framework */; };
 		B50FAA791781F45900F03754 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B50FAA771781F45900F03754 /* InfoPlist.strings */; };
 		B50FAA7C1781F45900F03754 /* MangoBallTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B50FAA7B1781F45900F03754 /* MangoBallTests.m */; };
+		B5EFD9941789F9700065AB98 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B5EFD9931789F9700065AB98 /* icon.png */; };
+		B5FB97C317821514002D5598 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = B5FB97C217821514002D5598 /* index.html */; };
+		B5FB97C51782158C002D5598 /* WebApp in Resources */ = {isa = PBXBuildFile; fileRef = B5FB97C41782158C002D5598 /* WebApp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +61,9 @@
 		B50FAA781781F45900F03754 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B50FAA7A1781F45900F03754 /* MangoBallTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MangoBallTests.h; sourceTree = "<group>"; };
 		B50FAA7B1781F45900F03754 /* MangoBallTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MangoBallTests.m; sourceTree = "<group>"; };
+		B5EFD9931789F9700065AB98 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = WebApp/icon.png; sourceTree = "<group>"; };
+		B5FB97C217821514002D5598 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		B5FB97C41782158C002D5598 /* WebApp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WebApp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,9 @@
 		B50FAA3E1781F45900F03754 = {
 			isa = PBXGroup;
 			children = (
+				B5B9D6DF178251DF00BA4FCE /* Resources */,
+				B5FB97C41782158C002D5598 /* WebApp */,
+				B5FB97C217821514002D5598 /* index.html */,
 				B50FAA501781F45900F03754 /* MangoBall */,
 				B50FAA741781F45900F03754 /* MangoBallTests */,
 				B50FAA491781F45900F03754 /* Frameworks */,
@@ -158,6 +167,14 @@
 				B50FAA771781F45900F03754 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B5B9D6DF178251DF00BA4FCE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B5EFD9931789F9700065AB98 /* icon.png */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +253,9 @@
 				B50FAA5F1781F45900F03754 /* Default@2x.png in Resources */,
 				B50FAA611781F45900F03754 /* Default-568h@2x.png in Resources */,
 				B50FAA641781F45900F03754 /* MainStoryboard.storyboard in Resources */,
+				B5FB97C317821514002D5598 /* index.html in Resources */,
+				B5FB97C51782158C002D5598 /* WebApp in Resources */,
+				B5EFD9941789F9700065AB98 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +473,7 @@
 				B50FAA811781F45900F03754 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B50FAA821781F45900F03754 /* Build configuration list for PBXNativeTarget "MangoBallTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +482,7 @@
 				B50FAA841781F45900F03754 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

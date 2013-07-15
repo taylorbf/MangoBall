@@ -1,0 +1,71 @@
+<!doctype html>  
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>MoonBall</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="nexusUI.min.js"></script>
+<!-- attach	-- edit needed
+	<script type="text/javascript" src="moonputt2.js"></script> -->
+<!-- scroll horiz bounce	
+	<script type="text/javascript" src="nexusMango15.js"></script> -->
+<!-- moon putt is moonputt2.js, with scroll is current--->
+	<script type="text/javascript" src="moonputt3.js"></script> -->
+<!-- sling
+	<script type="text/javascript" src="sling1.js"></script> -->
+</head>
+<body>
+
+	<style> 
+		body {
+			margin:0;
+			padding:0;
+			background-color:black;
+		}
+		canvas {
+			position:absolute;
+			left:0px;
+			top:0px;
+			width:570px;
+			height:300px;
+		}
+	</style>
+	
+	
+	<div style="color:#333;font-size:30pt;text-align:center;width:100%;position:absolute;top:0px;left:0px;margin-top:120px;font-family:gill sans">loading...</div>
+
+	<canvas nx="mango">Error</canvas>
+	<!--
+	<button style="position:absolute;top:50px;left:50px;z-index:1000;" onclick="storeStuff();">
+		Store Stuff
+	</button>
+	
+	<button style="position:absolute;top:150px;left:50px;z-index:1000;" onclick="recallStuff();" id="recall">
+		Recall Stuff
+	</button> -->
+	
+	
+	
+	<img src="images/splash.jpg" style="position:absolute;top:0px;left:0px;display:none" onclick="this.style.display='none'" />
+	
+	
+	<script>
+		
+		var stuffNum = 0;
+		
+		
+		function storeStuff() {
+			stuffNum++;
+			localStorage["stuff"] = stuffNum;
+		}
+		
+		function recallStuff() {
+			stuffNum = localStorage["stuff"];
+			document.getElementById("recall").innerHTML = stuffNum;
+		}
+		
+	</script>
+
+</body>
+</html>
