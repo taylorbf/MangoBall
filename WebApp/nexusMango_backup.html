@@ -152,19 +152,19 @@
 	<div id="gametips">Strokes   <br>Best Score </div>
 	
 	<!-- other screens -->
-	<img id="loadingscreen" class="fullsize" src="images/splash4.png" style="position:absolute;top:0px;left:0px;" onclick="mango1.displayChapters()" />
+	<img id="loadingscreen" class="fullsize" src="images/splash4.jpg" style="position:absolute;top:0px;left:0px;" onclick="mango1.displayChapters()" />
 	
 	<div id="chapters" class="fullsize screen"></div>
 	
 	<style>
 		
 		.screenbuttons {
-			width:520px;
+			width:490px;
 			margin:20px auto;
 		}
 		
 		.screenoption {
-			width:150px;
+			width:140px;
 			float:left;
 			margin:10px;
 		}
@@ -204,40 +204,30 @@
 			margin:10px auto;
 		}
 		
-		.backoption {
-			position:absolute;
-			top:10px;
-			left:10px;
-			width:50px;
-			height:50px;
-			background-image:url(images/icon_back.png);
-			display:block;
-		}
-		
-		.backoption:hover {
-			opacity:0.7;
-		}
-		
 	</style>
 	
 	<div id="pause" class="fullsize screen">
 		<br>
 		Paused<br>
 		<div class="screenbuttons">
+			<div class="screenoption" onclick="mango1.continuePlaying()">
+				<img class="optionicon forwardoption" src="images/icon_forward.png" />
+				<div class="optiontext">Continue</div>
+			</div>
 			<div class="screenoption" onclick="mango1.retryLevel()">
 				<img class="optionicon retryoption" src="images/icon_retry.png" />
 				<div class="optiontext">Retry Level</div>
 			</div>
 			<div class="screenoption" onclick="mango1.exitToChapters()">
 				<img class="optionicon chaptersoption" src="images/icon_chapters.png" />
-				<div class="optiontext">Choose Level</div>
-			</div>
-			<div class="screenoption" onclick="mango1.continuePlaying()">
-				<img class="optionicon forwardoption" src="images/icon_forward.png" />
-				<div class="optiontext">Continue</div>
+				<div class="optiontext">Exit Level</div>
 			</div>
 		</div>
-		<div class="backoption" onclick="mango1.exitToChapters()"></div>
+	<!--<br>
+		Paused<br><br>
+		<div onclick="mango1.continuePlaying()">Continue</div>
+		<div onclick="mango1.retryLevel()">Restart Level</div>
+		<div onclick="mango1.exitToChapters()">Exit Level</div> -->
 	</div>
 	
 	<div id="levellost" class="fullsize screen">
@@ -249,24 +239,30 @@
 	
 	<div id="levelwon" class="fullsize screen">
 		<br>
-		Level completed in <span id="winstrokes"></span> strokes<br><br>
-		<div class="screenbuttons">
-			<div class="screenoption" onclick="mango1.retryLevel()">
-				<img class="optionicon retryoption" src="images/icon_retry.png" />
-				<div class="optiontext">Retry Level</div>
-			</div>
-			<div class="screenoption" onclick="mango1.exitToChapters()">
-				<img class="optionicon chaptersoption" src="images/icon_chapters.png" />
-				<div class="optiontext">Choose Level</div>
-			</div>
-			<div class="screenoption" onclick="mango1.startNextLevel()">
-				<img class="optionicon forwardoption" src="images/icon_forward.png" />
-				<div class="optiontext">Next Level</div>
-			</div>
-		</div>
-		<div class="backoption" onclick="mango1.exitToChapters()"></div>
+		You won in <span id="winstrokes"></span> strokes<br><br>
+		<div onclick="mango1.startNextLevel()">Next Level</div>
+		<div onclick="mango1.retryLevel()">Retry</div>
+		<div onclick="mango1.exitToChapters()">Exit Level</div>
 	</div>
 	
+	
+	
+	<script>
+		
+		var stuffNum = 0;
+		
+		
+		function storeStuff() {
+			stuffNum++;
+			localStorage["stuff"] = stuffNum;
+		}
+		
+		function recallStuff() {
+			stuffNum = localStorage["stuff"];
+			document.getElementById("recall").innerHTML = stuffNum;
+		}
+		
+	</script>
 
 </body>
 </html>

@@ -38,7 +38,7 @@ function mango(target, transmitCommand, uiIndex) {
 	var gravity = 0.1;
 	var bounceLoss = -0.3; //-0.7
 	var framerate = 60;
-	var slingAffect = 14; //8 -- lower number means more speed
+	var slingAffect = 12; //8 -- lower number means more speed
 	var ballsize = 3; // 7
 	var slingSize = 40;
 	var slingThickness = ballsize;
@@ -47,7 +47,8 @@ function mango(target, transmitCommand, uiIndex) {
 	var echoDensity = 2;
 	var echoesOn = true;
 	
-	var clickChange = 0.03;
+	var clickChange = 0.02; // 0.03
+	var spinChange = 0; // 0.03
 
 	var scrollRate = 1;
 	this.scrolling = false;	
@@ -75,15 +76,22 @@ function mango(target, transmitCommand, uiIndex) {
 	this.allLayouts = [
 							// full: x=570, y=300, width=570, height=300
 							{
-								start: { x: 70, y: 210 },
+								start: { x: 80, y: 220 },
 								walls: [
-									{ x: 120,  y: 80, width: 100, height: 5, type: "land" },
-									{ x: 220,  y: 280, width: 100, height: 5, type: "land" },
-									{ x: 320,  y: 180, width: 100, height: 5, type: "land" },
-									{ x: 420,  y: 220, width: 100, height: 5, type: "land" }
+									{ x: 10, y: 230, width: 550, height: 5, type: "land" }
 								],
 								hole: [
-									{ x: 410,  y: 250, width: 30, height: 30, type: "hole" }
+									{ x: 470, y: 220, width: 30, height: 30, type: "hole" }
+								]
+							},
+							{
+								start: { x: 80, y: 220 },
+								walls: [
+									{ x: 10, y: 230, width: 550, height: 5, type: "land" },
+									{ x: 230, y: 130, width: 100, height: 100, type: "land" }
+								],
+								hole: [
+									{ x: 350, y: 220, width: 30, height: 30, type: "hole" }
 								]
 							},
 							{
@@ -161,13 +169,19 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	]
 	this.bgImgs = new Array();
-    
+	this.currentStroke = -1;
     
     
     /** Initialize Object **/
 	
 	this.make = function() {
 	
+		for (var i=0;i<self.allLayouts.length;i++) {
+			if (localStorage["best"+i]==undefined || localStorage["best"+i]==0) {
+				localStorage["best"+i] = "none";
+			}
+		}
+		
 		for (var i=0;i<this.bgSrcs.length;i++) {
 			self.bgImgs[i] = new Image();
 			self.bgImgs[i].src = "images/"+this.bgSrcs[i];
@@ -205,20 +219,22 @@ function mango(target, transmitCommand, uiIndex) {
 	}
 	
 	this.reset = function(jumpToNext) {
-		
-		console.log("reset");
-		
+
+				
 		if (jumpToNext) {
 			self.level++;
-			console.log(self.level, self.allLayouts.length);
+			self.currentStroke=-1;
+			self.countAStroke();
+			//$("#gametips").html("Strokes "+self.currentStroke+"<br>Best Score "+localStorage["best"+self.level]);
 			if (self.level>=self.allLayouts.length) {
 				self.level = 0;
-				console.log("start over");
 			}
 			self.layout = JSON.stringify(self.allLayouts[self.level]);
 			self.layout = JSON.parse(self.layout);
 			this.CurrentBalls = new Array();
 			this.addNewMB({"x": self.layout.start.x, "y": self.layout.start.y});
+		} else {
+			self.countAStroke();
 		}
 		
 		self.slinging = false;
@@ -227,6 +243,7 @@ function mango(target, transmitCommand, uiIndex) {
 		
 		self.CurrentBalls[0].x = self.layout.start.x;
 		self.CurrentBalls[0].y = self.layout.start.y;
+		self.CurrentBalls[0].spin = 0;
 		
 		self.slingPos = {
 			"x" : self.CurrentBalls[0].x,
@@ -241,9 +258,14 @@ function mango(target, transmitCommand, uiIndex) {
 		this.createLevel();
 	}
 	
+	this.countAStroke = function() {
+		self.currentStroke++;
+		$("#gametips").html("Strokes "+self.currentStroke+"<br>Best Score "+localStorage["best"+self.level]);
+	}
+	
 	this.ballStopped = function() {
 		
-		console.log("ball stopped");
+		self.countAStroke();
 		
 		self.slinging = false;
 		self.moving = false;
@@ -299,14 +321,12 @@ function mango(target, transmitCommand, uiIndex) {
 		self.layout = JSON.stringify(self.allLayouts[self.level]);
 		self.layout = JSON.parse(self.layout);
 		
-		console.log(self.layout.start);
-		
 		this.CurrentBalls = new Array();
 		this.addNewMB({"x": self.layout.start.x, "y": self.layout.start.y});
 		
+		self.currentStroke = -1;
 		self.reset();
 		self.startPulse();
-		
 		
 		$("#loadingscreen").hide(0);
 		$("#chapters").hide(0);	
@@ -330,6 +350,10 @@ function mango(target, transmitCommand, uiIndex) {
 	}
 	
 	this.displayWin = function() {
+		if (self.currentStroke<localStorage["best"+self.level] || localStorage["best"+self.level]=="none" || localStorage["best"+self.level]=="undefined") {
+			self.currentStroke++;
+			localStorage["best"+self.level] = self.currentStroke;
+		}
 		$("#levelwon").show(0);
 	}
 	
@@ -340,6 +364,7 @@ function mango(target, transmitCommand, uiIndex) {
 	this.retryLevel = function() {
 		$("#levelwon").hide(0);
 		$("#levellost").hide(0);
+		self.currentStroke = -1;
 		self.displayLevel(self.level);
 	}
 	
@@ -441,7 +466,6 @@ function mango(target, transmitCommand, uiIndex) {
 			
 			with (this.context) {
 				if (self.moving) {
-					console.log("go go go");
 					self.CurrentBalls[0].move();
 				}
 				self.CurrentBalls[0].draw();
@@ -459,16 +483,18 @@ function mango(target, transmitCommand, uiIndex) {
 	}
 	
 	this.drawHole = function() {
-	/*	with (this.context) {
+		with (self.context) {
+			globalAlpha = 0.8;
 			fillStyle = "#0af";
 			fillRect(self.hole.x,self.hole.y, self.hole.width, self.hole.height);
 			fillStyle = "#6cf";
 			fillRect(self.hole.x,self.hole.y, self.hole.width, self.hole.height/1.5);
-			fillStyle = "#eef";
+			fillStyle = "#cef";
 			fillRect(self.hole.x,self.hole.y, self.hole.width, self.hole.height/3);
+			globalAlpha = 1;
 		}
-	*/
 	
+	/*
 		with (self.context) {
 			globalAlpha = 0.8;
 			
@@ -489,6 +515,8 @@ function mango(target, transmitCommand, uiIndex) {
 			
 			globalAlpha = 1;
 		}
+	*/	
+		
 	}
 	
 	
@@ -526,11 +554,9 @@ function mango(target, transmitCommand, uiIndex) {
 	this.move = function(e) {
 		if (self.clickPos.y >= self.height) {
 			self.clickPos.y = self.height-ballsize;
-			console.log(self.clickPos.y);
 		}
 		if (self.clickPos.x <= 0) {
 			self.clickPos.x = ballsize;
-			console.log(self.clickPos.y);
 		}
 		ballPos = self.clickPos;
 		if (self.clicked && self.slinging) {
@@ -540,10 +566,8 @@ function mango(target, transmitCommand, uiIndex) {
 	}
 	
 	this.release = function(e) {
-		console.log("let go");
 		if (self.slinging) {
 			self.startShot();
-			console.log("2");
 		}
 		self.clickedR = false;
 		self.clickedL = false;
@@ -693,6 +717,8 @@ function mango(target, transmitCommand, uiIndex) {
 		this.deltay = 1;
 		this.echoes = new Array();
 		this.echopace = 0;
+		this.spin = 0;
+		this.friction = 0.8;
 		
 		this.reInit = function() {
 			
@@ -719,8 +745,10 @@ function mango(target, transmitCommand, uiIndex) {
 			
 			if (self.clickedR) {
 				this.deltax -= clickChange;
+				this.spin -= clickChange*6;
 			} else if (self.clickedL) {
 				this.deltax += clickChange;	
+				this.spin += clickChange*6;
 			}
 			
 			//movement
@@ -732,16 +760,14 @@ function mango(target, transmitCommand, uiIndex) {
 			if (this.y>(self.canvas.height-this.size-2)) {
 		//	if (this.y>(self.canvas.height)) {
 			//	this.bounce("y");
-				self.displayLose();
+			//	self.displayLose();
 				self.reset();
-				console.log("reset via y");
 			}
 			
 			if (this.x>(self.canvas.width-this.size-2) || this.x<0 ) {
 			//	this.bounce("x");
 				self.reset();
-				console.log("reset via x");
-				self.displayLose();
+			//	self.displayLose();
 			}
 			
 			
@@ -764,11 +790,9 @@ function mango(target, transmitCommand, uiIndex) {
 						noBridges = false;
 					}
 				}
-				console.log(noBridges);
 			//	if (noBridges) {
 					self.won = true;
 					self.wonWait = 0;
-					console.log("level complete");
 			//	}
 			}
 			
@@ -779,9 +803,9 @@ function mango(target, transmitCommand, uiIndex) {
 				this.deltax = (self.hole.x - this.x);
 				this.deltay = (self.hole.y - this.y);
 				
-				if (self.wonWait>50) {
+				if (self.wonWait>60) {
 					self.displayWin();
-					self.reset();
+				//	self.reset();
 				}
 				
 			} else {
@@ -842,6 +866,9 @@ function mango(target, transmitCommand, uiIndex) {
 		//	self.ballStopped();
 		//	current
 			if (hitblock.type!="water") {
+				this.deltax = this.deltax * this.friction;
+				this.deltax = this.deltax + this.spin/3;
+				this.spin = 0;
 				if (axis=="R") {
 					this.deltax = Math.abs(this.deltax);
 				} else if (axis=="B") {
@@ -860,27 +887,7 @@ function mango(target, transmitCommand, uiIndex) {
 			}
 			
 			
-			
-		/*	very old
-			if (hitblock.type!="water") {
-				if (axis=="R") {
-					this.deltax = this.deltax * -1;
-				} else if (axis=="B") {
-					this.deltay = this.deltay * bounceLoss;
-				} else if (axis=="L") {
-					this.deltax = this.deltax * -1;
-					alert("Bounced L");
-				} else if (axis=="T") {
-					this.deltay = this.deltay * bounceLoss;
-				} else if (axis=="x") {
-					this.deltax = this.deltax * -1;
-				} else if (axis=="y") {
-					this.deltay = this.deltay * bounceLoss;
-				}
-				this.direction = this.direction * (-1);
-			}
-		*/	
-			
+		
 			switch (hitblock.type) {
 				case "ice":
 					this.deltax = (dream(10)-5);
@@ -896,16 +903,23 @@ function mango(target, transmitCommand, uiIndex) {
 					break;
 			}
 			
-			if (Math.abs(this.deltay)<0.1 && hitblock.type=="land") {
-				this.deltax=0;
-				this.deltay=-.2;
-				self.ballStopped();
-			}
 			
-			if (Math.abs(this.deltay)<0.1 && hitblock.type=="ice") {
-				this.deltax=0;
-				this.deltay=-.2;
-				self.ballStopped();
+			/* roll and stop */
+			
+			if (hitblock.type=="land" || hitblock.type=="ice") {
+			
+				if (Math.abs(this.deltay)<0.2 && Math.abs(this.deltax)<0.1) {
+					this.deltax=0;
+					this.deltay=-.2;
+					self.ballStopped();
+				} else {
+					if (Math.abs(this.deltay)<0.2) {
+					//	this.deltax=0;
+						this.deltay=-.4;
+					//	self.ballStopped();
+					}
+				}
+			
 			}
 		
 			
@@ -923,17 +937,38 @@ function mango(target, transmitCommand, uiIndex) {
 			/*	if (self.moonReady) {
 					drawImage(self.moon, this.x-this.radius, this.y-this.radius, this.radius*2, this.radius*2);
 			}  */
+			
 	
 				beginPath();
 				fillStyle = this.color;
 				arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
 				fill();
+				closePath();
+				
+	
+			if (self.moving) {
+								
+				globalAlpha = 1;
+				beginPath();
+				strokeStyle = "#000";
+				arc(this.x, this.y, this.radius-4, Math.PI*this.spin+Math.PI*.5, Math.PI*this.spin, true);
+				lineWidth = 5;
+				stroke();
+				closePath(); 
+				
+				beginPath();
+				arc(this.x, this.y, this.radius-4, Math.PI*this.spin+Math.PI*1.5, Math.PI*this.spin+Math.PI*1, true);
+				stroke();
+				closePath();
+				globalAlpha = 1;
+			}	
 				
 				for (var i=0;i<this.echoes.length;i++) {
 					globalAlpha = (2.5-i/4)/5;
 					beginPath();
 					arc(this.echoes[i].x, this.echoes[i].y, this.radius, 0, Math.PI*2, true);
 					fill();
+					closePath();
 				}
 				
 				globalAlpha = 1;

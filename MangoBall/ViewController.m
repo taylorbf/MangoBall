@@ -20,6 +20,8 @@
     
     [_viewWeb setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0]];
     [_viewWeb setOpaque:NO];
+    _viewWeb.scrollView.scrollEnabled = NO;
+    _viewWeb.scrollView.bounces = NO;
  
    /*
     NSString *fullURL = @"http://www.whitechord.org";

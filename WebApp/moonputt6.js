@@ -38,7 +38,7 @@ function mango(target, transmitCommand, uiIndex) {
 	var gravity = 0.1;
 	var bounceLoss = -0.3; //-0.7
 	var framerate = 60;
-	var slingAffect = 14; //8 -- lower number means more speed
+	var slingAffect = 12; //8 -- lower number means more speed
 	var ballsize = 3; // 7
 	var slingSize = 40;
 	var slingThickness = ballsize;
@@ -47,7 +47,8 @@ function mango(target, transmitCommand, uiIndex) {
 	var echoDensity = 2;
 	var echoesOn = true;
 	
-	var clickChange = 0.03;
+	var clickChange = 0.02; // 0.03
+	var spinChange = 0; // 0.03
 
 	var scrollRate = 1;
 	this.scrolling = false;	
@@ -75,15 +76,34 @@ function mango(target, transmitCommand, uiIndex) {
 	this.allLayouts = [
 							// full: x=570, y=300, width=570, height=300
 							{
-								start: { x: 70, y: 210 },
+								start: { x: 80, y: 220 },
 								walls: [
-									{ x: 120,  y: 80, width: 100, height: 5, type: "land" },
-									{ x: 220,  y: 280, width: 100, height: 5, type: "land" },
-									{ x: 320,  y: 180, width: 100, height: 5, type: "land" },
-									{ x: 420,  y: 220, width: 100, height: 5, type: "land" }
+									{ x: 10, y: 230, width: 460, height: 5, type: "land" }
 								],
 								hole: [
-									{ x: 410,  y: 250, width: 30, height: 30, type: "hole" }
+									{ x: 470, y: 230, width: 30, height: 30, type: "hole" }
+								]
+							},
+							{
+								start: { x: 80, y: 220 },
+								walls: [
+									{ x: 10, y: 230, width: 550, height: 10, type: "land" },
+									{ x: 230, y: 130, width: 100, height: 100, type: "land" }
+								],
+								hole: [
+									{ x: 350, y: 200, width: 30, height: 30, type: "hole" }
+								]
+							},
+							{
+								start: { x: 80, y: 220 },
+								walls: [
+									{ x: 10, y: 230, width: 400, height: 10, type: "land" },
+									{ x: 230, y: 130, width: 100, height: 100, type: "land" },
+									{ x: 400, y: 30, width: 10, height: 130, type: "land" },
+									{ x: 410, y: 230, width: 100, height: 10, type: "jump" }
+								],
+								hole: [
+									{ x: 450, y: 50, width: 30, height: 30, type: "hole" }
 								]
 							},
 							{
@@ -110,7 +130,7 @@ function mango(target, transmitCommand, uiIndex) {
 								walls: [
 									{ x: 350,  y: 100, width: 5, height: 30, type: "bridge" },
 									{ x: 350,  y: 130, width: 40, height: 5, type: "bridge" },
-									{ x: 390,  y: 100, width: 5, height: 30, type: "bridge" }
+									{ x: 390,  y: 100, width: 5, height: 30, type: "land" }
 								],
 								hole: [
 									{ x: 400,  y: 70, width: 30, height: 30, type: "hole" }
@@ -161,17 +181,39 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	]
 	this.bgImgs = new Array();
-    
+	this.currentStroke = -1;
+	
+	this.textureSrcs = [ "big_bg_jump.jpg", "bg_ice.jpg", "bg_jump.jpg", ];
+	this.textureImgs = new Array();
+	this.textures = new Array();
     
     
     /** Initialize Object **/
 	
 	this.make = function() {
 	
+		for (var i=0;i<self.allLayouts.length;i++) {
+			if (localStorage["best"+i]==undefined || localStorage["best"+i]==0) {
+				localStorage["best"+i] = "none";
+			}
+		}
+		
 		for (var i=0;i<this.bgSrcs.length;i++) {
 			self.bgImgs[i] = new Image();
 			self.bgImgs[i].src = "images/"+this.bgSrcs[i];
 	 	}
+	 	
+		for (var i=0;i<this.textureSrcs.length;i++) {
+			self.textureImgs[i] = new Image();
+		    self.textureImgs[i].onload = function() {
+		    	for (j=0;j<self.textureImgs.length;j++) {
+		        	self.textures[j] = self.context.createPattern(self.textureImgs[j], 'repeat');
+		    	}
+		    };
+			self.textureImgs[i].src = "images/"+this.textureSrcs[i];
+		}
+	 	
+   
 		
 		this.bgimg = new Image();
 		this.bgimg.onload = function() {
@@ -205,20 +247,22 @@ function mango(target, transmitCommand, uiIndex) {
 	}
 	
 	this.reset = function(jumpToNext) {
-		
-		console.log("reset");
-		
+
+				
 		if (jumpToNext) {
 			self.level++;
-			console.log(self.level, self.allLayouts.length);
+			self.currentStroke=-1;
+			self.countAStroke();
+			//$("#gametips").html("Strokes "+self.currentStroke+"<br>Best Score "+localStorage["best"+self.level]);
 			if (self.level>=self.allLayouts.length) {
 				self.level = 0;
-				console.log("start over");
 			}
 			self.layout = JSON.stringify(self.allLayouts[self.level]);
 			self.layout = JSON.parse(self.layout);
 			this.CurrentBalls = new Array();
 			this.addNewMB({"x": self.layout.start.x, "y": self.layout.start.y});
+		} else {
+			self.countAStroke();
 		}
 		
 		self.slinging = false;
@@ -227,6 +271,8 @@ function mango(target, transmitCommand, uiIndex) {
 		
 		self.CurrentBalls[0].x = self.layout.start.x;
 		self.CurrentBalls[0].y = self.layout.start.y;
+		self.CurrentBalls[0].spin = 0;
+		self.CurrentBalls[0].spinRotation = 0;
 		
 		self.slingPos = {
 			"x" : self.CurrentBalls[0].x,
@@ -239,11 +285,18 @@ function mango(target, transmitCommand, uiIndex) {
 		self.CurrentBalls[0].reInit();
 		
 		this.createLevel();
+		
+		self.startPulse();
+	}
+	
+	this.countAStroke = function() {
+		self.currentStroke++;
+		$("#gametips").html("Strokes "+self.currentStroke+"<br>Best Score "+localStorage["best"+self.level]);
 	}
 	
 	this.ballStopped = function() {
 		
-		console.log("ball stopped");
+		self.countAStroke();
 		
 		self.slinging = false;
 		self.moving = false;
@@ -277,19 +330,51 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	this.displayChapters = function() {
 	
+		var lastOpenLevelFound = false;
 		$("#loadingscreen").hide(0);
 		var htmlstr = '<div class="chaptertitle">Choose a Level</div>';
-		
+		console.log("here");
 		for (var i=0;i<self.allLayouts.length;i++) {
-			htmlstr += '<div class="chapterbuttonoutline">'
-					+ '<div class="chapterbutton" onclick="mango1.displayLevel('+i+')">'
-					+ i
-					+ '</div>'
-					+ '</div>';
+			if (localStorage["best"+i]!="none" || !lastOpenLevelFound) {
+				console.log("1 "+i);
+				if (localStorage["best"+i]=="none") {
+					lastOpenLevelFound = true;
+					console.log("2 "+i);
+				}
+				htmlstr += '<div class="chapterbuttonoutline">'
+						+ '<div class="chapterbutton" onclick="mango1.displayLevel('+i+')">';
+				if (localStorage["best"+i]!="none") {
+						htmlstr += i + '<div style="font-size:8pt">best '+localStorage["best"+i]+'</div>';
+				} else {
+					    htmlstr += i + '<div style="font-size:9pt">_</div>';
+				}
+				htmlstr	+= '</div>'
+						+ '</div>';
+			} else if (localStorage["best"+i]=="none") {
+				htmlstr += '<div class="chapterbuttonoutline" style="opacity:0.5">'
+						+ '<div class="chapterbutton"">'
+						+ i
+					    + '<div style="font-size:9pt">_</div>'
+						+ '</div>'
+						+ '</div>';
+			}
 		}
+		
+		htmlstr += '<div class="chapterbuttonoutline">'
+				+ '<div class="chapterbutton" onclick="mango1.clearStorage();">'
+				+ 'erase'
+				+ '</div>'
+				+ '</div>';
 		
 		$("#chapters").html(htmlstr).show(0);	
 		
+	}
+	
+	this.clearStorage = function() {
+		for (var i=0;i<self.allLayouts.length;i++) {
+			localStorage["best"+i] = "none";
+		}
+		console.log(localStorage);
 	}
 	
 	this.displayLevel = function(levelNum) {
@@ -299,14 +384,12 @@ function mango(target, transmitCommand, uiIndex) {
 		self.layout = JSON.stringify(self.allLayouts[self.level]);
 		self.layout = JSON.parse(self.layout);
 		
-		console.log(self.layout.start);
-		
 		this.CurrentBalls = new Array();
 		this.addNewMB({"x": self.layout.start.x, "y": self.layout.start.y});
 		
+		self.currentStroke = -1;
 		self.reset();
 		self.startPulse();
-		
 		
 		$("#loadingscreen").hide(0);
 		$("#chapters").hide(0);	
@@ -325,12 +408,15 @@ function mango(target, transmitCommand, uiIndex) {
 		
 	}
 	
-	this.exitToChapters = function() {
-		$("#pause").show(0);
-	}
-	
 	this.displayWin = function() {
+		self.currentStroke++;
+		if (self.currentStroke<localStorage["best"+self.level] || localStorage["best"+self.level]=="none" || localStorage["best"+self.level]=="undefined") {
+			localStorage["best"+self.level] = self.currentStroke;
+		}
+		$("#winstrokes").html(self.currentStroke);
 		$("#levelwon").show(0);
+	//	$(".backoption").show(0);
+		
 	}
 	
 	this.displayLose = function() {
@@ -338,8 +424,10 @@ function mango(target, transmitCommand, uiIndex) {
 	}
 	
 	this.retryLevel = function() {
+		$("#pause").hide(0);
 		$("#levelwon").hide(0);
 		$("#levellost").hide(0);
+		self.currentStroke = -1;
 		self.displayLevel(self.level);
 	}
 	
@@ -349,6 +437,7 @@ function mango(target, transmitCommand, uiIndex) {
 	}
 	
 	this.exitToChapters = function() {
+		self.displayChapters();
 		$("#levelwon").hide(0);
 		$("#levellost").hide(0);
 		$("#pause").hide(0);
@@ -441,7 +530,6 @@ function mango(target, transmitCommand, uiIndex) {
 			
 			with (this.context) {
 				if (self.moving) {
-					console.log("go go go");
 					self.CurrentBalls[0].move();
 				}
 				self.CurrentBalls[0].draw();
@@ -459,16 +547,18 @@ function mango(target, transmitCommand, uiIndex) {
 	}
 	
 	this.drawHole = function() {
-	/*	with (this.context) {
+		with (self.context) {
+			globalAlpha = 0.5;
 			fillStyle = "#0af";
 			fillRect(self.hole.x,self.hole.y, self.hole.width, self.hole.height);
 			fillStyle = "#6cf";
 			fillRect(self.hole.x,self.hole.y, self.hole.width, self.hole.height/1.5);
-			fillStyle = "#eef";
+			fillStyle = "#cef";
 			fillRect(self.hole.x,self.hole.y, self.hole.width, self.hole.height/3);
+			globalAlpha = 1;
 		}
-	*/
 	
+	/*
 		with (self.context) {
 			globalAlpha = 0.8;
 			
@@ -489,6 +579,8 @@ function mango(target, transmitCommand, uiIndex) {
 			
 			globalAlpha = 1;
 		}
+	*/	
+		
 	}
 	
 	
@@ -526,11 +618,9 @@ function mango(target, transmitCommand, uiIndex) {
 	this.move = function(e) {
 		if (self.clickPos.y >= self.height) {
 			self.clickPos.y = self.height-ballsize;
-			console.log(self.clickPos.y);
 		}
 		if (self.clickPos.x <= 0) {
 			self.clickPos.x = ballsize;
-			console.log(self.clickPos.y);
 		}
 		ballPos = self.clickPos;
 		if (self.clicked && self.slinging) {
@@ -540,10 +630,8 @@ function mango(target, transmitCommand, uiIndex) {
 	}
 	
 	this.release = function(e) {
-		console.log("let go");
 		if (self.slinging) {
 			self.startShot();
-			console.log("2");
 		}
 		self.clickedR = false;
 		self.clickedL = false;
@@ -648,10 +736,12 @@ function mango(target, transmitCommand, uiIndex) {
 					globalAlpha = 0.8;
 					switch (block.type) {
 						case "land":
-							fillStyle = mango1.skins[0].land;
+						//	fillStyle = mango1.skins[0].land;
+							fillStyle = mango1.textures[0];
 							break;
 						case "ice":
-							fillStyle = mango1.skins[0].ice;
+						//	fillStyle = mango1.skins[0].ice;
+							fillStyle = mango1.textures[1];
 							break;
 						case "water":
 							fillStyle = mango1.skins[0].water;
@@ -660,7 +750,8 @@ function mango(target, transmitCommand, uiIndex) {
 							fillStyle = mango1.skins[0].bridge;
 							break;
 						case "jump":
-							fillStyle = mango1.skins[0].jump;
+						//	fillStyle = mango1.skins[0].jump;
+							fillStyle = mango1.textures[2];
 							break;
 					}
 					fillRect(block.x, block.y, block.width, block.height);
@@ -693,6 +784,9 @@ function mango(target, transmitCommand, uiIndex) {
 		this.deltay = 1;
 		this.echoes = new Array();
 		this.echopace = 0;
+		this.spin = 0;
+		this.spinRotation = 0;
+		this.friction = 0.8;
 		
 		this.reInit = function() {
 			
@@ -719,8 +813,10 @@ function mango(target, transmitCommand, uiIndex) {
 			
 			if (self.clickedR) {
 				this.deltax -= clickChange;
+				this.spin -= clickChange*6;
 			} else if (self.clickedL) {
 				this.deltax += clickChange;	
+				this.spin += clickChange*6;
 			}
 			
 			//movement
@@ -732,16 +828,14 @@ function mango(target, transmitCommand, uiIndex) {
 			if (this.y>(self.canvas.height-this.size-2)) {
 		//	if (this.y>(self.canvas.height)) {
 			//	this.bounce("y");
-				self.displayLose();
+			//	self.displayLose();
 				self.reset();
-				console.log("reset via y");
 			}
 			
 			if (this.x>(self.canvas.width-this.size-2) || this.x<0 ) {
 			//	this.bounce("x");
 				self.reset();
-				console.log("reset via x");
-				self.displayLose();
+			//	self.displayLose();
 			}
 			
 			
@@ -756,70 +850,126 @@ function mango(target, transmitCommand, uiIndex) {
 						right: self.hole.x + self.hole.width, 
 						left: self.hole.x
 					}
-			var itBounced = ballIntercept(ball,rect,nx,ny);
-			if (itBounced) {
-				var noBridges = true;
-				for (var i=0;i<self.CurrentBlocks.length;i++) {
-					if (self.CurrentBlocks[i].type=="bridge") {
-						noBridges = false;
+		
+			var allBouncesAccounted = true;
+			var bouncesAccounted = new Array();
+			
+			do {		
+					
+				var itBounced = holeIntercept(ball,rect,nx,ny);
+				if (itBounced) {
+					var noBridges = true;
+					for (var i=0;i<self.CurrentBlocks.length;i++) {
+						if (self.CurrentBlocks[i].type=="bridge") {
+							noBridges = false;
+						}
 					}
+				
+					if (bouncesAccounted.indexOf(itBounced.d)==-1) {
+						bouncesAccounted.push(itBounced.d);
+						allBouncesAccounted = false;
+						switch (itBounced.d) {
+							case "left":
+								this.bounce("L",{"type": "hole"});
+								break;
+							case "right":
+								this.bounce("R",{"type": "hole"});
+								break;
+							case "top":
+								this.bounce("T",{"type": "hole"});
+								break;
+							case "bottom":
+								this.bounce("B",{"type": "hole"});
+								break;
+						} 
+					
+					} else {
+						allBouncesAccounted = true;
+					}
+						
+				//	if (noBridges) {
+						self.won = true;
+						self.wonWait = 0;
+				//	}
+				} else {
+					allBouncesAccounted = true;
 				}
-				console.log(noBridges);
-			//	if (noBridges) {
-					self.won = true;
-					self.wonWait = 0;
-					console.log("level complete");
-			//	}
-			}
+				
+			} while (!allBouncesAccounted);
 			
 			if (self.won) {
 				
+			//	console.log (this.x, rect.right);
+				if (this.x>rect.right-this.radius) {
+					this.x=rect.right - this.radius*2;
+					console.log ("bumped");
+				}
+				if (this.x<rect.left+this.radius) {
+					this.x=rect.left + this.radius*2;
+				}
+				
 				self.wonWait++;
 				
-				this.deltax = (self.hole.x - this.x);
-				this.deltay = (self.hole.y - this.y);
+			//	this.deltax = (self.hole.x - this.x);
+			//	this.deltay = (self.hole.y - this.y);
 				
-				if (self.wonWait>50) {
+				if (self.wonWait>200) {
 					self.displayWin();
-					self.reset();
+					self.stopPulse();
+				//	self.reset();
 				}
 				
 			} else {
 				
-				//bounce check (blocks)
-				for (var i=0;i<self.CurrentBlocks.length;i++) {
-					if (!self.CurrentBlocks[i].hit) {
-						
-						var rect = { 
-							top: self.CurrentBlocks[i].y, 
-							bottom: self.CurrentBlocks[i].y + self.CurrentBlocks[i].height, 
-							right: self.CurrentBlocks[i].x + self.CurrentBlocks[i].width, 
-							left: self.CurrentBlocks[i].x
-						}
-						
-						var itBounced = ballIntercept(ball,rect,nx,ny);
-						if (itBounced) {
+				var allBouncesAccounted = true;
+				var bouncesAccounted = new Array();
+				
+				do {
+					
+					//bounce check (blocks)
+					for (var i=0;i<self.CurrentBlocks.length;i++) {
+						if (!self.CurrentBlocks[i].hit) {
 							
-							this.x = itBounced.x;
-							this.y = itBounced.y;
-						
-							switch (itBounced.d) {
-								case "left":
-									this.bounce("L",self.CurrentBlocks[i]);
-									break;
-								case "right":
-									this.bounce("R",self.CurrentBlocks[i]);
-									break;
-								case "top":
-									this.bounce("T",self.CurrentBlocks[i]);
-									break;
-								case "bottom":
-									this.bounce("B",self.CurrentBlocks[i]);
-									break;
+							var rect = { 
+								top: self.CurrentBlocks[i].y, 
+								bottom: self.CurrentBlocks[i].y + self.CurrentBlocks[i].height, 
+								right: self.CurrentBlocks[i].x + self.CurrentBlocks[i].width, 
+								left: self.CurrentBlocks[i].x
+							}
+							
+							var itBounced = ballIntercept(ball,rect,nx,ny);
+							if (itBounced) {
+								
+							//	this.x = itBounced.x;
+							//	this.y = itBounced.y;
+								
+								if (bouncesAccounted.indexOf(itBounced.d)==-1) {
+									bouncesAccounted.push(itBounced.d);
+									allBouncesAccounted = false;
+									switch (itBounced.d) {
+										case "left":
+											this.bounce("L",self.CurrentBlocks[i]);
+											break;
+										case "right":
+											this.bounce("R",self.CurrentBlocks[i]);
+											break;
+										case "top":
+											this.bounce("T",self.CurrentBlocks[i]);
+											break;
+										case "bottom":
+											this.bounce("B",self.CurrentBlocks[i]);
+											break;
+									}
+								} else {
+									allBouncesAccounted = true;
+								}
+							} else {
+								allBouncesAccounted = true;
 							}
 						}
 					}
-				}
+				} while (!allBouncesAccounted);
+				
 			}
 			
 			//add echo
@@ -842,6 +992,9 @@ function mango(target, transmitCommand, uiIndex) {
 		//	self.ballStopped();
 		//	current
 			if (hitblock.type!="water") {
+				this.deltax = this.deltax * this.friction;
+				this.deltax = this.deltax + this.spin/3;
+				this.spin = 0;
 				if (axis=="R") {
 					this.deltax = Math.abs(this.deltax);
 				} else if (axis=="B") {
@@ -860,27 +1013,7 @@ function mango(target, transmitCommand, uiIndex) {
 			}
 			
 			
-			
-		/*	very old
-			if (hitblock.type!="water") {
-				if (axis=="R") {
-					this.deltax = this.deltax * -1;
-				} else if (axis=="B") {
-					this.deltay = this.deltay * bounceLoss;
-				} else if (axis=="L") {
-					this.deltax = this.deltax * -1;
-					alert("Bounced L");
-				} else if (axis=="T") {
-					this.deltay = this.deltay * bounceLoss;
-				} else if (axis=="x") {
-					this.deltax = this.deltax * -1;
-				} else if (axis=="y") {
-					this.deltay = this.deltay * bounceLoss;
-				}
-				this.direction = this.direction * (-1);
-			}
-		*/	
-			
+		
 			switch (hitblock.type) {
 				case "ice":
 					this.deltax = (dream(10)-5);
@@ -896,19 +1029,41 @@ function mango(target, transmitCommand, uiIndex) {
 					break;
 			}
 			
-			if (Math.abs(this.deltay)<0.1 && hitblock.type=="land") {
-				this.deltax=0;
-				this.deltay=-.2;
-				self.ballStopped();
+			
+			/* roll and stop */
+			
+			if (hitblock.type=="land" || hitblock.type=="ice") {
+			
+				if (Math.abs(this.deltay)<0.2 && Math.abs(this.deltax)<0.1) {
+					this.deltax=0;
+					this.deltay=-.2;
+					self.ballStopped();
+				} else {
+					if (Math.abs(this.deltay)<0.2) {
+					//	this.deltax=0;
+						this.deltay=-.4;
+					//	self.ballStopped();
+					}
+				}
+			
 			}
 			
-			if (Math.abs(this.deltay)<0.1 && hitblock.type=="ice") {
-				this.deltax=0;
-				this.deltay=-.2;
-				self.ballStopped();
-			}
-		
+			if (hitblock.type=="hole" ) {
 			
+				if (Math.abs(this.deltay)<0.2 && Math.abs(this.deltax)<0.1) {
+					this.deltax=0;
+					this.deltay=-.2;
+					self.displayWin();
+					self.stopPulse();
+				} else {
+					if (Math.abs(this.deltay)<0.2) {
+					//	this.deltax=0;
+						this.deltay=-.4;
+					//	self.ballStopped();
+					}
+				}
+			
+			}
 			
 		}
 		
@@ -923,17 +1078,40 @@ function mango(target, transmitCommand, uiIndex) {
 			/*	if (self.moonReady) {
 					drawImage(self.moon, this.x-this.radius, this.y-this.radius, this.radius*2, this.radius*2);
 			}  */
+			
 	
 				beginPath();
 				fillStyle = this.color;
 				arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
 				fill();
+				closePath();
+				
+	
+			if (self.moving) {
+				
+				this.spinRotation = this.spinRotation + (this.spin/20);
+								
+				globalAlpha = 1;
+				beginPath();
+				strokeStyle = "#000";
+				arc(this.x, this.y, this.radius-4, Math.PI*this.spinRotation+Math.PI*.5, Math.PI*this.spinRotation, true);
+				lineWidth = 5;
+				stroke();
+				closePath(); 
+				
+				beginPath();
+				arc(this.x, this.y, this.radius-4, Math.PI*this.spinRotation+Math.PI*1.5, Math.PI*this.spinRotation+Math.PI*1, true);
+				stroke();
+				closePath();
+				globalAlpha = 1;
+			}	
 				
 				for (var i=0;i<this.echoes.length;i++) {
 					globalAlpha = (2.5-i/4)/5;
 					beginPath();
 					arc(this.echoes[i].x, this.echoes[i].y, this.radius, 0, Math.PI*2, true);
 					fill();
+					closePath();
 				}
 				
 				globalAlpha = 1;
@@ -1017,6 +1195,31 @@ function mango(target, transmitCommand, uiIndex) {
 	  }
 	  return null;
 	}
+	
+	
+	
+	
+		
+	var holeIntercept = function(ball, rect, nx, ny) {
+	  	var pt;
+	    if (ny < 0) {
+	      pt = intercept(ball.x, ball.y, ball.x + nx, ball.y + ny, rect.left - ball.radius, rect.top + ball.radius, rect.right + ball.radius, rect.top + ball.radius, "bottom");
+	    }
+	    else if (ny > 0) {
+	      pt = intercept(ball.x, ball.y, ball.x + nx, ball.y + ny, rect.left - ball.radius, rect.bottom - ball.radius, rect.right + ball.radius, rect.bottom - ball.radius, "top");
+	    }
+	    if (!pt) {
+		  if (nx < 0) {
+		    pt = intercept(ball.x, ball.y, ball.x + nx, ball.y + ny, rect.left + ball.radius, rect.top - ball.radius,  rect.left  + ball.radius, rect.bottom + ball.radius, "right");
+		  }
+		  else if (nx > 0) {
+		    pt = intercept(ball.x, ball.y, ball.x + nx, ball.y + ny, rect.right - ball.radius, rect.top - ball.radius, rect.right - ball.radius, rect.bottom + ball.radius, "left");
+		  }
+		}
+		return pt;
+	}
+	
+	
 	
 	function dream(scale) {
 		return ~~(Math.random()*scale);
