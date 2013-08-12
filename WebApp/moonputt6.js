@@ -3,13 +3,6 @@
 * @author Ben Taylor     *
 ************************/
 
-/* goals:
-
-make the ball able to rest on ground
-second putt
-screen in-between each fail w/ score
-
-*/
 				
 function mango(target, transmitCommand, uiIndex) {
 					
@@ -92,6 +85,12 @@ function mango(target, transmitCommand, uiIndex) {
 								],
 								hole: [
 									{ x: 350, y: 200, width: 30, height: 30, type: "hole" }
+								],
+								portals: [
+									[
+										{ x: 150, y: 100, width: 30, height: 30, type: "in"},
+										{ x: 350, y: 100, width: 30, height: 30, type: "out"}	
+									]
 								]
 							},
 							{
@@ -453,6 +452,7 @@ function mango(target, transmitCommand, uiIndex) {
 		//	this.addNewBlock(this.layout.walls[i]);
 			self.CurrentBlocks.push(new Block(i, this.layout.walls[i]));
 		}
+		self.portals = self.layout.portals;
 		this.createHole(this.layout.hole[0]);
 	/*	for (var i=0;i<this.CurrentBlocks.length;i++) {
 			this.CurrentBlocks[i].hit=false;
@@ -556,6 +556,23 @@ function mango(target, transmitCommand, uiIndex) {
 			fillStyle = "#cef";
 			fillRect(self.hole.x,self.hole.y, self.hole.width, self.hole.height/3);
 			globalAlpha = 1;
+		}
+		for (var i=0;i<self.portals.length;i++) {
+			var curPortalIn = self.portals[i][0];
+			var curPortalOut = self.portals[i][1];
+			with (self.context) {
+				globalAlpha = 0.5;
+				fillStyle = "#f22";
+				fillRect(curPortalIn.x,curPortalIn.y, curPortalIn.width, curPortalIn.height);
+				fillRect(curPortalOut.x,curPortalOut.y, curPortalOut.width, curPortalOut.height);
+				fillStyle = "#f66";
+				fillRect(curPortalIn.x,curPortalIn.y, curPortalIn.width, curPortalIn.height/1.5);
+				fillRect(curPortalOut.x,curPortalOut.y, curPortalOut.width, curPortalOut.height/1.5);
+				fillStyle = "#faa";
+				fillRect(curPortalIn.x,curPortalIn.y, curPortalIn.width, curPortalIn.height/3);
+				fillRect(curPortalOut.x,curPortalOut.y, curPortalOut.width, curPortalOut.height/3);
+				globalAlpha = 1;
+			}
 		}
 	
 	/*
