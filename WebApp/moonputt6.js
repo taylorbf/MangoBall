@@ -75,7 +75,8 @@ function mango(target, transmitCommand, uiIndex) {
 								],
 								hole: [
 									{ x: 470, y: 230, width: 30, height: 30, type: "hole" }
-								]
+								],
+								portals: [ ]
 							},
 							{
 								start: { x: 80, y: 220 },
@@ -103,7 +104,8 @@ function mango(target, transmitCommand, uiIndex) {
 								],
 								hole: [
 									{ x: 450, y: 50, width: 30, height: 30, type: "hole" }
-								]
+								],
+								portals: [ ]
 							},
 							{
 								start: { x: 70, y: 210 },
@@ -122,7 +124,8 @@ function mango(target, transmitCommand, uiIndex) {
 								],
 								hole: [
 									{ x: 410,  y: 250, width: 30, height: 30, type: "hole" }
-								]
+								],
+								portals: [ ]
 							},
 							{
 								start: { x: 70, y: 220 },
@@ -133,7 +136,8 @@ function mango(target, transmitCommand, uiIndex) {
 								],
 								hole: [
 									{ x: 400,  y: 70, width: 30, height: 30, type: "hole" }
-								]
+								],
+								portals: [ ]
 							},
 							{
 								start: { x: 70, y: 220 },
@@ -145,7 +149,8 @@ function mango(target, transmitCommand, uiIndex) {
 								],
 								hole: [
 									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
-								]
+								],
+								portals: [ ]
 							},
 							{
 								start: { x: 70, y: 220 },
@@ -155,7 +160,8 @@ function mango(target, transmitCommand, uiIndex) {
 								],
 								hole: [
 									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
-								]
+								],
+								portals: [ ]
 							},
 							{
 								start: { x: 50, y: 120 },
@@ -164,7 +170,8 @@ function mango(target, transmitCommand, uiIndex) {
 								],
 								hole: [
 									{ x: 480,  y: 220, width: 30, height: 30, type: "hole" }
-								]
+								],
+								portals: [ ]
 							}
 	]
 	this.layout = JSON.stringify(this.allLayouts[self.level]);
@@ -716,7 +723,58 @@ function mango(target, transmitCommand, uiIndex) {
 				lineTo(self.CurrentBalls[0].x, self.CurrentBalls[0].y);
 				stroke();
 				closePath();
+				
+				//guides
+		/*		globalAlpha = 0.1;
+				fillStyle = "#fff";
+				fillRect(20,self.height-20,self.width,20); */
+				
+				var xgauge = Math.floor(Math.abs(self.CurrentBalls[0].deltax*30)+Math.abs(self.CurrentBalls[0].deltay*30));
+				var xloc = xgauge;
+				
+		/*		globalAlpha = 0.6;
+				
+				var grd = createLinearGradient(self.width,self.height,0,self.height);
+				grd.addColorStop(0,"#00aaff");
+				grd.addColorStop(1,"#aaaaaa");
+				fillStyle = grd;
+				fillRect(0,self.height-20,xloc,20); */
+				
+				globalAlpha = 1;
+				fillStyle = "#ddd";
+				textAlign = "center";
+				font = "10px";
+				fillText(xgauge,self.slingPos.x,self.slingPos.y-25);
+				
+				
+		/*		globalAlpha = 0.1;
+				fillStyle = "#fff";
+				fillRect(0,0,20,self.height);
+				fillRect(20,self.height-20,self.width,20);
+				var xgauge = Math.floor(self.CurrentBalls[0].deltax*20);
+				var ygauge = Math.floor(self.CurrentBalls[0].deltay*20);
+				var xloc = self.width/2+xgauge;
+				var yloc = self.height/2+ygauge;
+				
+				globalAlpha = 0.6;
+				
+				var grd = createLinearGradient(0,0,0,self.height);
+				grd.addColorStop(0,"#00aaff");
+				grd.addColorStop(1,"#aaaaaa");
+				fillStyle = grd;
+				fillRect(0,self.height/2,20,ygauge);
+				var grd = createLinearGradient(self.width,self.height,0,self.height);
+				grd.addColorStop(0,"#00aaff");
+				grd.addColorStop(1,"#aaaaaa");
+				fillStyle = grd;
+				fillRect(self.width/2,self.height-20,xgauge,20);
+				
+				globalAlpha = 1;
+				fillStyle = "#ddd";
+				fillText(xgauge,xloc,self.height-5);
+				fillText(ygauge,5,yloc); */
 			}
+			
 			
 			globalAlpha = 1;
 		}
@@ -859,6 +917,18 @@ function mango(target, transmitCommand, uiIndex) {
 			var ball = { x: this.x, y: this.y, radius: this.radius }
 			var nx = this.deltax;
 			var ny = this.deltay + gravity;
+			
+			//bounce check portal
+			for (var i=0;i<self.portals.length;i++) {
+			//	var pBounce = holeIntercept(ball,self.portals[i][0],nx,ny);
+				if (isInside2(ball,self.portals[i][0])) {
+					this.x = this.x-self.portals[i][0].x+self.portals[i][1].x;
+					this.y = this.y-self.portals[i][0].y+self.portals[i][1].y;
+				//	this.deltay = 0;
+				//	this.deltax = 0;
+				}
+			}			
+			
 			
 			//bounce check (hole)
 			var rect = { 
@@ -1170,6 +1240,14 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	function isInside(clickedNode,currObject) {
 		if (clickedNode.x > currObject.x && clickedNode.x < (currObject.x+currObject.wid) && clickedNode.y > currObject.y && clickedNode.y < (currObject.y+currObject.hgt)) {
+			return true;	
+		} else {
+			return false;	
+		}
+	}
+	
+	function isInside2(clickedNode,currObject) {
+		if (clickedNode.x > currObject.x && clickedNode.x < (currObject.x+currObject.width) && clickedNode.y > currObject.y && clickedNode.y < (currObject.y+currObject.height)) {
 			return true;	
 		} else {
 			return false;	
