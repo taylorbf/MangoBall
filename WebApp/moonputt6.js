@@ -66,8 +66,115 @@ function mango(target, transmitCommand, uiIndex) {
 	]
 	
 	this.level = 0;
-	this.allLayouts = [
-							// full: x=570, y=300, width=570, height=300
+							// layout fullsize: x=570, y=300, width=570, height=300
+	this.portalsLayouts = [
+							{
+								start: { x: 80, y: 220 },
+								walls: [
+									{ x: 10, y: 230, width: 460, height: 5, type: "land" }
+								],
+								hole: [
+									{ x: 470, y: 230, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ],
+								tip: "Tip: Touch and drag the white circle to sling the ball into the blue hole."
+							},
+							{
+								start: { x: 80, y: 220 },
+								walls: [
+									{ x: 10, y: 230, width: 550, height: 10, type: "land" },
+									{ x: 230, y: 130, width: 100, height: 100, type: "land" }
+								],
+								hole: [
+									{ x: 350, y: 200, width: 30, height: 30, type: "hole" }
+								],
+								portals: [
+									[
+										{ x: 150, y: 100, width: 30, height: 30, type: "in"},
+										{ x: 350, y: 100, width: 30, height: 30, type: "out"}	
+									]
+								]
+							},
+							{
+								start: { x: 80, y: 220 },
+								walls: [
+									{ x: 10, y: 230, width: 400, height: 10, type: "land" },
+									{ x: 230, y: 130, width: 100, height: 100, type: "land" },
+									{ x: 400, y: 30, width: 10, height: 130, type: "land" },
+									{ x: 410, y: 230, width: 100, height: 10, type: "jump" }
+								],
+								hole: [
+									{ x: 450, y: 50, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
+							},
+							{
+								start: { x: 70, y: 210 },
+								walls: [
+									{ x: 120,  y: 80, width: 100, height: 10, type: "land" },
+									{ x: 220,  y: 80, width: 50, height: 10, type: "water" },
+									{ x: 270,  y: 80, width: 50, height: 10, type: "land" },
+									{ x: 320,  y: 80, width: 50, height: 10, type: "water" },
+									{ x: 370,  y: 80, width: 20, height: 10, type: "land" },
+								//	{ x: 450,  y: 50, width: 10, height: 210, type: "land" },
+									{ x: 320,  y: 160, width: 130, height: 10, type: "jump" },
+									{ x: 190,  y: 160, width: 130, height: 10, type: "land" },
+									{ x: 120,  y: 90, width: 10, height: 160, type: "land" },
+									{ x: 120,  y: 250, width: 250, height: 10, type: "ice" },
+									{ x: 10,  y: 100, width: 10, height: 150, type: "land" },
+								],
+								hole: [
+									{ x: 410,  y: 250, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
+							},
+							{
+								start: { x: 70, y: 220 },
+								walls: [
+									{ x: 350,  y: 100, width: 5, height: 30, type: "bridge" },
+									{ x: 350,  y: 130, width: 40, height: 5, type: "bridge" },
+									{ x: 390,  y: 100, width: 5, height: 30, type: "land" }
+								],
+								hole: [
+									{ x: 400,  y: 70, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
+							},
+							{
+								start: { x: 70, y: 220 },
+								walls: [
+									{ x: 400,  y: 250, width: 50, height: 5, type: "jump" },
+									{ x: 300,  y: 200, width: 50, height: 5, type: "bridge" },
+									{ x: 200,  y: 150, width: 50, height: 5, type: "bridge" },
+									{ x: 100,  y: 100, width: 50, height: 5, type: "bridge" }
+								],
+								hole: [
+									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
+							},
+							{
+								start: { x: 70, y: 220 },
+								walls: [
+									{ x: 400,  y: 100, width: 50, height: 5, type: "land" },
+									{ x: 400,  y: 20, width: 5, height: 40, type: "land" }
+								],
+								hole: [
+									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
+							},
+							{
+								start: { x: 50, y: 120 },
+								walls: [
+									{ x: 200,  y: 20, width: 10, height: 300, type: "land" }
+								],
+								hole: [
+									{ x: 480,  y: 220, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
+							},
+							
 							{
 								start: { x: 80, y: 220 },
 								walls: [
@@ -172,8 +279,54 @@ function mango(target, transmitCommand, uiIndex) {
 									{ x: 480,  y: 220, width: 30, height: 30, type: "hole" }
 								],
 								portals: [ ]
+							},
+							{
+								start: { x: 70, y: 220 },
+								walls: [
+									{ x: 400,  y: 100, width: 50, height: 5, type: "land" },
+									{ x: 400,  y: 20, width: 5, height: 40, type: "land" }
+								],
+								hole: [
+									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
+							},
+							{
+								start: { x: 50, y: 120 },
+								walls: [
+									{ x: 200,  y: 20, width: 10, height: 300, type: "land" }
+								],
+								hole: [
+									{ x: 480,  y: 220, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
 							}
 	]
+	this.bridgesLayouts = [
+							{
+								start: { x: 80, y: 220 },
+								walls: [
+									{ x: 10, y: 230, width: 460, height: 5, type: "land" }
+								],
+								hole: [
+									{ x: 470, y: 100, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
+							}
+	]
+	this.holeinoneLayouts = [
+							{
+								start: { x: 80, y: 220 },
+								walls: [
+									{ x: 10, y: 230, width: 460, height: 5, type: "land" }
+								],
+								hole: [
+									{ x: 470, y: 0, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
+							}
+	]
+	this.allLayouts = self.portalsLayouts;
 	this.layout = JSON.stringify(this.allLayouts[self.level]);
 	this.layout = JSON.parse(this.layout);
 	
@@ -334,6 +487,27 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	/* Display Pages */
 	
+	this.displayWorldOptions = function() {
+		$("#loadingscreen").hide(0);
+		$("#worlds").show(0);
+	}
+	
+	this.openWorld = function(whichworld) {
+		switch(whichworld) {
+			case "portals":
+				self.allLayouts = self.portalsLayouts;
+				break;
+			case "bridges":
+				self.allLayouts = self.bridgesLayouts;
+				break;
+			case "holeinone":
+				self.allLayouts = self.holeinoneLayouts;
+				break;
+		}
+		$("#worlds").hide(0);
+		self.displayChapters();
+	}
+	
 	this.displayChapters = function() {
 	
 		var lastOpenLevelFound = false;
@@ -342,35 +516,33 @@ function mango(target, transmitCommand, uiIndex) {
 		console.log("here");
 		for (var i=0;i<self.allLayouts.length;i++) {
 			if (localStorage["best"+i]!="none" || !lastOpenLevelFound) {
-				console.log("1 "+i);
 				if (localStorage["best"+i]=="none") {
 					lastOpenLevelFound = true;
-					console.log("2 "+i);
 				}
 				htmlstr += '<div class="chapterbuttonoutline">'
 						+ '<div class="chapterbutton" onclick="mango1.displayLevel('+i+')">';
 				if (localStorage["best"+i]!="none") {
-						htmlstr += i + '<div style="font-size:8pt">best '+localStorage["best"+i]+'</div>';
+						htmlstr += (i+1) + '<div style="font-size:8pt">best '+localStorage["best"+i]+'</div>';
 				} else {
-					    htmlstr += i + '<div style="font-size:9pt">_</div>';
+					    htmlstr += (i+1) + '<div style="font-size:9pt">_</div>';
 				}
 				htmlstr	+= '</div>'
 						+ '</div>';
 			} else if (localStorage["best"+i]=="none") {
 				htmlstr += '<div class="chapterbuttonoutline" style="opacity:0.5">'
 						+ '<div class="chapterbutton"">'
-						+ i
+						+ (i+1)
 					    + '<div style="font-size:9pt">_</div>'
 						+ '</div>'
 						+ '</div>';
 			}
 		}
 		
-		htmlstr += '<div class="chapterbuttonoutline">'
+	/*	htmlstr += '<div class="chapterbuttonoutline">'
 				+ '<div class="chapterbutton" onclick="mango1.clearStorage();">'
 				+ 'erase'
 				+ '</div>'
-				+ '</div>';
+				+ '</div>'; */
 		
 		$("#chapters").html(htmlstr).show(0);	
 		
@@ -494,6 +666,7 @@ function mango(target, transmitCommand, uiIndex) {
 		this.drawBalls();
 		this.drawBlocks();
 		this.drawHole();
+		this.drawTip();
 		
 	}
 	
@@ -578,6 +751,13 @@ function mango(target, transmitCommand, uiIndex) {
 				fillStyle = "#faa";
 				fillRect(curPortalIn.x,curPortalIn.y, curPortalIn.width, curPortalIn.height/3);
 				fillRect(curPortalOut.x,curPortalOut.y, curPortalOut.width, curPortalOut.height/3);
+				globalAlpha = 0.6;
+				fillStyle = "#fff";
+				textAlign = "center";
+				font="20px courier";
+				textBaseline = "middle";
+				fillText(i+1,curPortalIn.x+curPortalIn.width/2,curPortalIn.y+curPortalIn.height/2);
+				fillText(i+1,curPortalOut.x+curPortalOut.width/2,curPortalOut.y+curPortalOut.height/2);
 				globalAlpha = 1;
 			}
 		}
@@ -608,7 +788,11 @@ function mango(target, transmitCommand, uiIndex) {
 	}
 	
 	
-	
+	this.drawTip = function() {
+		if (self.layout.tip) {
+			self.context.fillText(self.layout.tip,0,self.height-20);
+		}
+	}
 	
 	
 	/** Mouse functions **/
@@ -729,7 +913,8 @@ function mango(target, transmitCommand, uiIndex) {
 				fillStyle = "#fff";
 				fillRect(20,self.height-20,self.width,20); */
 				
-				var xgauge = Math.floor(Math.abs(self.CurrentBalls[0].deltax*30)+Math.abs(self.CurrentBalls[0].deltay*30));
+		//		var xgauge = Math.floor(Math.abs(self.CurrentBalls[0].deltax*30)+Math.abs(self.CurrentBalls[0].deltay*30));
+				var xgauge = Math.floor((Math.sqrt(Math.pow(self.CurrentBalls[0].deltax,2)+Math.pow(self.CurrentBalls[0].deltay,2)))*10);
 				var xloc = xgauge;
 				
 		/*		globalAlpha = 0.6;
@@ -743,7 +928,7 @@ function mango(target, transmitCommand, uiIndex) {
 				globalAlpha = 1;
 				fillStyle = "#ddd";
 				textAlign = "center";
-				font = "10px";
+				font = "10px arial";
 				fillText(xgauge,self.slingPos.x,self.slingPos.y-25);
 				
 				
