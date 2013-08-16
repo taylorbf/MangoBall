@@ -49,7 +49,7 @@
 			height:300px;
 		}
 		.screen { 
-			background-image:url(images/screen_bg6.jpg);
+			background-image:url(images/screen_bg7.jpg);
 		}
 		canvas {
 			position:absolute;
@@ -62,7 +62,7 @@
 		#chapters {
 			display:none;
 			background-color:#eee;
-			background-image:url(images/screen_bg4.jpg);
+			background-image:url(images/screen_bg7.jpg);
 		}
 		
 		.chaptertitle {
@@ -76,11 +76,12 @@
 			background-image: -moz-linear-gradient(center bottom, rgb(14,173,223) 33%, rgb(0,210,255) 67% );
 			padding: 4px;
 			float:left;
-			margin: 5px 0px 10px 20px;
+			margin: 5px 10px 10px 10px;
 			border-radius:8px;
 			-moz-border-radius:8px;
 			-webkit-border-radius:8px;
 		}
+		
 		
 		.chapterbuttonoutline:hover {
 			opacity:0.7;	
@@ -159,14 +160,14 @@
 		
 		#worlds {
 			color:white;	
-			font-size:20pt;
+			font-size:30pt;
 			text-align:center;
 		}
 		
 		.worldoption {
 			float:left;
 			margin:15px 41px;
-			font-size:13pt;
+			font-size:17pt;
 			text-align:center;
 		}
 		
@@ -183,13 +184,16 @@
 		.worldoption:hover {
 			opacity:0.8;
 		}
-		
+		 
 		
 	</style>
 	
+    
 	<!-- worlds -->
 	<div id="worlds" class="fullsize screen" style="display:none">
-		
+		<div class="backoption" onclick="mango1.displaySplash()">
+            <img src="images/icon_back.png">
+        </div>
 		<br>
 		Worlds<br>
 		<div class="screenbuttons">
@@ -202,7 +206,7 @@
 				<img src="images/g_bridges.png">
 			</div>
 			<div class="worldoption" onclick="mango1.openWorld('holeinone')">
-				Hole-In-1<br>
+				Hole-in-1<br>
 				<img src="images/g_holein1.png">
 			</div>
 		</div>
@@ -263,12 +267,8 @@
 			left:10px;
 			width:50px;
 			height:50px;
-			background-image:url(images/icon_back.png);
+		//	background-image:url(images/icon_back.png);
 			display:block;
-		}
-		
-		.backoption:hover {
-			opacity:0.7;
 		}
 		
 	</style>

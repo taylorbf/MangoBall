@@ -5,11 +5,11 @@
 	<key>CFBundleIconFile</key>
 	<string>icon.png</string>
 	<key>UIPrerenderedIcon</key>
-	<false/>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Moon Ball</string>
+	<string>Moonball</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>

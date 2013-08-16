@@ -77,7 +77,7 @@ function mango(target, transmitCommand, uiIndex) {
 									{ x: 470, y: 230, width: 30, height: 30, type: "hole" }
 								],
 								portals: [ ],
-								tip: "Tip: Touch and drag the white circle to sling the ball into the blue hole."
+								tip: "Touch and drag the white circle to sling the ball into the blue hole."
 							},
 							{
 								start: { x: 80, y: 220 },
@@ -89,24 +89,25 @@ function mango(target, transmitCommand, uiIndex) {
 									{ x: 350, y: 200, width: 30, height: 30, type: "hole" }
 								],
 								portals: [
-									[
-										{ x: 150, y: 100, width: 30, height: 30, type: "in"},
-										{ x: 350, y: 100, width: 30, height: 30, type: "out"}	
-									]
-								]
+								],
+								tip: "After releasing the ball, touch the screen to add spin to the ball"
 							},
 							{
 								start: { x: 80, y: 220 },
 								walls: [
-									{ x: 10, y: 230, width: 400, height: 10, type: "land" },
-									{ x: 230, y: 130, width: 100, height: 100, type: "land" },
-									{ x: 400, y: 30, width: 10, height: 130, type: "land" },
-									{ x: 410, y: 230, width: 100, height: 10, type: "jump" }
+									{ x: 10, y: 230, width: 500, height: 10, type: "land" },
+									{ x: 150, y: -100, width: 50, height: 330, type: "land" }
 								],
 								hole: [
 									{ x: 450, y: 50, width: 30, height: 30, type: "hole" }
 								],
-								portals: [ ]
+								portals: [ 
+									[
+										{ x: 100, y: 100, width: 30, height: 30, type: "in"},
+										{ x: 250, y: 200, width: 30, height: 30, type: "out"}	
+									]
+								],
+								tip: "Red portals transport the ball between them"
 							},
 							{
 								start: { x: 70, y: 210 },
@@ -290,7 +291,7 @@ function mango(target, transmitCommand, uiIndex) {
 									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
 								],
 								portals: [ ]
-							},
+							}, 
 							{
 								start: { x: 50, y: 120 },
 								walls: [
@@ -302,6 +303,7 @@ function mango(target, transmitCommand, uiIndex) {
 								portals: [ ]
 							}
 	]
+    
 	this.bridgesLayouts = [
 							{
 								start: { x: 80, y: 220 },
@@ -487,8 +489,14 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	/* Display Pages */
 	
+	this.displaySplash = function() {
+		$("#loadingscreen").show(0);
+		$("#worlds").hide(0);
+	}
+	
 	this.displayWorldOptions = function() {
 		$("#loadingscreen").hide(0);
+		$("#chapters").hide(0);
 		$("#worlds").show(0);
 	}
 	
@@ -512,8 +520,9 @@ function mango(target, transmitCommand, uiIndex) {
 	
 		var lastOpenLevelFound = false;
 		$("#loadingscreen").hide(0);
-		var htmlstr = '<div class="chaptertitle">Choose a Level</div>';
-		console.log("here");
+		var htmlstr = '<div class="backoption" onclick="mango1.displayWorldOptions()"></div>'
+					+ '<div class="chaptertitle" style="width:400px;margin:20px auto;text-align:center;">Choose a Level</div>'
+					+ '<div style="margin:30px auto;width:500px;">';
 		for (var i=0;i<self.allLayouts.length;i++) {
 			if (localStorage["best"+i]!="none" || !lastOpenLevelFound) {
 				if (localStorage["best"+i]=="none") {
@@ -543,6 +552,8 @@ function mango(target, transmitCommand, uiIndex) {
 				+ 'erase'
 				+ '</div>'
 				+ '</div>'; */
+				
+		htmlstr += '</div>';
 		
 		$("#chapters").html(htmlstr).show(0);	
 		
@@ -790,7 +801,14 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	this.drawTip = function() {
 		if (self.layout.tip) {
-			self.context.fillText(self.layout.tip,0,self.height-20);
+			with (self.context) {
+				fillStyle = "#fff";
+				textAlign = "center";
+				globalAlpha = 1;
+				font = "bold 15px Arial";
+				fillText(self.layout.tip,self.width/2,self.height-20);
+				globalAlpha = 1;
+			}
 		}
 	}
 	
