@@ -88,9 +88,25 @@ function mango(target, transmitCommand, uiIndex) {
 								hole: [
 									{ x: 350, y: 200, width: 30, height: 30, type: "hole" }
 								],
-								portals: [
-								],
+								portals: [ ],
 								tip: "After releasing the ball, touch the screen to add spin to the ball"
+							},
+							{
+								start: { x: 80, y: 220 },
+								walls: [
+									{ x: 10, y: 230, width: 500, height: 10, type: "land" },
+									{ x: 150, y: -100, width: 50, height: 330, type: "land" }
+								],
+								hole: [
+									{ x: 450, y: 50, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ 
+									[
+										{ x: 100, y: 100, width: 30, height: 30, type: "in", page: "1"},
+										{ x: 250, y: 200, width: 30, height: 30, type: "out"}	
+									]
+								],
+								tip: "Red portals transport the ball between them"
 							},
 							{
 								start: { x: 80, y: 220 },
@@ -106,8 +122,7 @@ function mango(target, transmitCommand, uiIndex) {
 										{ x: 100, y: 100, width: 30, height: 30, type: "in"},
 										{ x: 250, y: 200, width: 30, height: 30, type: "out"}	
 									]
-								],
-								tip: "Red portals transport the ball between them"
+								]
 							},
 							{
 								start: { x: 70, y: 210 },
@@ -212,93 +227,6 @@ function mango(target, transmitCommand, uiIndex) {
 								],
 								hole: [
 									{ x: 450, y: 50, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							},
-							{
-								start: { x: 70, y: 210 },
-								walls: [
-									{ x: 120,  y: 80, width: 100, height: 10, type: "land" },
-									{ x: 220,  y: 80, width: 50, height: 10, type: "water" },
-									{ x: 270,  y: 80, width: 50, height: 10, type: "land" },
-									{ x: 320,  y: 80, width: 50, height: 10, type: "water" },
-									{ x: 370,  y: 80, width: 20, height: 10, type: "land" },
-								//	{ x: 450,  y: 50, width: 10, height: 210, type: "land" },
-									{ x: 320,  y: 160, width: 130, height: 10, type: "jump" },
-									{ x: 190,  y: 160, width: 130, height: 10, type: "land" },
-									{ x: 120,  y: 90, width: 10, height: 160, type: "land" },
-									{ x: 120,  y: 250, width: 250, height: 10, type: "ice" },
-									{ x: 10,  y: 100, width: 10, height: 150, type: "land" },
-								],
-								hole: [
-									{ x: 410,  y: 250, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							},
-							{
-								start: { x: 70, y: 220 },
-								walls: [
-									{ x: 350,  y: 100, width: 5, height: 30, type: "bridge" },
-									{ x: 350,  y: 130, width: 40, height: 5, type: "bridge" },
-									{ x: 390,  y: 100, width: 5, height: 30, type: "land" }
-								],
-								hole: [
-									{ x: 400,  y: 70, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							},
-							{
-								start: { x: 70, y: 220 },
-								walls: [
-									{ x: 400,  y: 250, width: 50, height: 5, type: "jump" },
-									{ x: 300,  y: 200, width: 50, height: 5, type: "bridge" },
-									{ x: 200,  y: 150, width: 50, height: 5, type: "bridge" },
-									{ x: 100,  y: 100, width: 50, height: 5, type: "bridge" }
-								],
-								hole: [
-									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							},
-							{
-								start: { x: 70, y: 220 },
-								walls: [
-									{ x: 400,  y: 100, width: 50, height: 5, type: "land" },
-									{ x: 400,  y: 20, width: 5, height: 40, type: "land" }
-								],
-								hole: [
-									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							},
-							{
-								start: { x: 50, y: 120 },
-								walls: [
-									{ x: 200,  y: 20, width: 10, height: 300, type: "land" }
-								],
-								hole: [
-									{ x: 480,  y: 220, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							},
-							{
-								start: { x: 70, y: 220 },
-								walls: [
-									{ x: 400,  y: 100, width: 50, height: 5, type: "land" },
-									{ x: 400,  y: 20, width: 5, height: 40, type: "land" }
-								],
-								hole: [
-									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							}, 
-							{
-								start: { x: 50, y: 120 },
-								walls: [
-									{ x: 200,  y: 20, width: 10, height: 300, type: "land" }
-								],
-								hole: [
-									{ x: 480,  y: 220, width: 30, height: 30, type: "hole" }
 								],
 								portals: [ ]
 							}
@@ -489,15 +417,18 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	/* Display Pages */
 	
+	this.slideTime = 500;
+	
 	this.displaySplash = function() {
-		$("#loadingscreen").show(0);
-		$("#worlds").hide(0);
+		$("#loadingscreen").animate({"left": "0px"}, self.slideTime);
+	//	$("#worlds").hide(0);
 	}
 	
 	this.displayWorldOptions = function() {
-		$("#loadingscreen").hide(0);
-		$("#chapters").hide(0);
-		$("#worlds").show(0);
+		$("#loadingscreen").animate({"left": "-570px"}, self.slideTime);
+		$("#chapters").animate({"left": "570px"}, self.slideTime);
+		$("#worlds").show(0).animate({"left": "0px"}, self.slideTime);
+		$("#navbg").show(0).animate({"left": "0px"}, self.slideTime);
 	}
 	
 	this.openWorld = function(whichworld) {
@@ -512,14 +443,13 @@ function mango(target, transmitCommand, uiIndex) {
 				self.allLayouts = self.holeinoneLayouts;
 				break;
 		}
-		$("#worlds").hide(0);
+		$("#worlds").animate({"left": "-570px"}, self.slideTime);
 		self.displayChapters();
 	}
 	
 	this.displayChapters = function() {
 	
 		var lastOpenLevelFound = false;
-		$("#loadingscreen").hide(0);
 		var htmlstr = '<div class="backoption" onclick="mango1.displayWorldOptions()"></div>'
 					+ '<div class="chaptertitle" style="width:400px;margin:20px auto;text-align:center;">Choose a Level</div>'
 					+ '<div style="margin:30px auto;width:500px;">';
@@ -538,7 +468,7 @@ function mango(target, transmitCommand, uiIndex) {
 				htmlstr	+= '</div>'
 						+ '</div>';
 			} else if (localStorage["best"+i]=="none") {
-				htmlstr += '<div class="chapterbuttonoutline" style="opacity:0.5">'
+				htmlstr += '<div class="chapterbuttonoutline2">'
 						+ '<div class="chapterbutton"">'
 						+ (i+1)
 					    + '<div style="font-size:9pt">_</div>'
@@ -555,7 +485,7 @@ function mango(target, transmitCommand, uiIndex) {
 				
 		htmlstr += '</div>';
 		
-		$("#chapters").html(htmlstr).show(0);	
+		$("#chapters").html(htmlstr).show(0).animate({"left": "0px"}, self.slideTime);	
 		
 	}
 	
@@ -580,19 +510,19 @@ function mango(target, transmitCommand, uiIndex) {
 		self.reset();
 		self.startPulse();
 		
-		$("#loadingscreen").hide(0);
-		$("#chapters").hide(0);	
+		$("#chapters, #navbg").animate({"left": "-570px"}, self.slideTime);	
 		
 	}
 	
 	this.displayPause = function() {
-		$("#pause").show(0);
+		console.log("paused");
+		$("#pause, #navbg").animate({"left": "0px"}, 0);
 		self.stopPulse();
 		
 	}
 	
 	this.continuePlaying = function() {
-		$("#pause").hide(0);
+		$("#pause, #navbg").animate({"left": "-570px"}, 0);
 		self.startPulse();
 		
 	}
@@ -603,35 +533,34 @@ function mango(target, transmitCommand, uiIndex) {
 			localStorage["best"+self.level] = self.currentStroke;
 		}
 		$("#winstrokes").html(self.currentStroke);
-		$("#levelwon").show(0);
-	//	$(".backoption").show(0);
+		$("#levelwon, #navbg").animate({"left": "0px"}, self.slideTime);	;
 		
 	}
 	
 	this.displayLose = function() {
-		$("#levellost").show(0);
+		$("#levellost, #navbg").animate({"left": "0px"}, self.slideTime);	
 	}
 	
 	this.retryLevel = function() {
-		$("#pause").hide(0);
-		$("#levelwon").hide(0);
-		$("#levellost").hide(0);
+		$("#pause, #navbg").animate({"left": "-570px"}, self.slideTime);
+		$("#levelwon").animate({"left": "-570px"}, self.slideTime);
+		$("#levellost").animate({"left": "-570px"}, self.slideTime);
 		self.currentStroke = -1;
 		self.displayLevel(self.level);
 	}
 	
 	this.startNextLevel = function() {
-		$("#levelwon").hide(0);
+		$("#levelwon, #navbg").animate({"left": "-570px"}, self.slideTime)
 		self.reset(true);
 	}
 	
 	this.exitToChapters = function() {
 		self.displayChapters();
-		$("#levelwon").hide(0);
-		$("#levellost").hide(0);
-		$("#pause").hide(0);
+		$("#levelwon").animate({"left": "-570px"}, self.slideTime);
+		$("#levellost").animate({"left": "-570px"}, self.slideTime);
+		$("#pause").animate({"left": "-570px"}, self.slideTime);
 		self.reset();
-		$("#chapters").show(0);
+		$("#chapters, #navbg").animate({"left": "0px"}, self.slideTime)
 	}
 	
 	/* Create Stage */

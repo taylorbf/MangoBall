@@ -23,7 +23,7 @@
 		B50FAA711781F45900F03754 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50FAA4C1781F45900F03754 /* Foundation.framework */; };
 		B50FAA791781F45900F03754 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B50FAA771781F45900F03754 /* InfoPlist.strings */; };
 		B50FAA7C1781F45900F03754 /* MangoBallTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B50FAA7B1781F45900F03754 /* MangoBallTests.m */; };
-		B5CA287F17BD49BC00D84304 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B5CA287E17BD49BC00D84304 /* icon.png */; };
+		B520D18B17C2D4BA007D9EAA /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B520D18A17C2D4BA007D9EAA /* icon.png */; };
 		B5FB97C317821514002D5598 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = B5FB97C217821514002D5598 /* index.html */; };
 		B5FB97C51782158C002D5598 /* WebApp in Resources */ = {isa = PBXBuildFile; fileRef = B5FB97C41782158C002D5598 /* WebApp */; };
 /* End PBXBuildFile section */
@@ -61,7 +61,7 @@
 		B50FAA781781F45900F03754 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B50FAA7A1781F45900F03754 /* MangoBallTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MangoBallTests.h; sourceTree = "<group>"; };
 		B50FAA7B1781F45900F03754 /* MangoBallTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MangoBallTests.m; sourceTree = "<group>"; };
-		B5CA287E17BD49BC00D84304 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = WebApp/images/icon.png; sourceTree = "<group>"; };
+		B520D18A17C2D4BA007D9EAA /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = WebApp/images/icon.png; sourceTree = "<group>"; };
 		B5FB97C217821514002D5598 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		B5FB97C41782158C002D5598 /* WebApp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WebApp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -172,7 +172,7 @@
 		B5B9D6DF178251DF00BA4FCE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B5CA287E17BD49BC00D84304 /* icon.png */,
+				B520D18A17C2D4BA007D9EAA /* icon.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -255,7 +255,7 @@
 				B50FAA641781F45900F03754 /* MainStoryboard.storyboard in Resources */,
 				B5FB97C317821514002D5598 /* index.html in Resources */,
 				B5FB97C51782158C002D5598 /* WebApp in Resources */,
-				B5CA287F17BD49BC00D84304 /* icon.png in Resources */,
+				B520D18B17C2D4BA007D9EAA /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

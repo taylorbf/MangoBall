@@ -88,8 +88,7 @@ function mango(target, transmitCommand, uiIndex) {
 								hole: [
 									{ x: 350, y: 200, width: 30, height: 30, type: "hole" }
 								],
-								portals: [
-								],
+								portals: [ ],
 								tip: "After releasing the ball, touch the screen to add spin to the ball"
 							},
 							{
@@ -489,15 +488,18 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	/* Display Pages */
 	
+	this.slideTime = 500;
+	
 	this.displaySplash = function() {
-		$("#loadingscreen").show(0);
-		$("#worlds").hide(0);
+		$("#loadingscreen").animate({"left": "0px"}, self.slideTime);
+	//	$("#worlds").hide(0);
 	}
 	
 	this.displayWorldOptions = function() {
-		$("#loadingscreen").hide(0);
-		$("#chapters").hide(0);
-		$("#worlds").show(0);
+		$("#loadingscreen").animate({"left": "-570px"}, self.slideTime);
+		$("#chapters").animate({"left": "570px"}, self.slideTime);
+		$("#worlds").show(0).animate({"left": "0px"}, self.slideTime);
+		$("#navbg").show(0).animate({"left": "0px"}, self.slideTime);
 	}
 	
 	this.openWorld = function(whichworld) {
@@ -512,14 +514,13 @@ function mango(target, transmitCommand, uiIndex) {
 				self.allLayouts = self.holeinoneLayouts;
 				break;
 		}
-		$("#worlds").hide(0);
+		$("#worlds").animate({"left": "-570px"}, self.slideTime);
 		self.displayChapters();
 	}
 	
 	this.displayChapters = function() {
 	
 		var lastOpenLevelFound = false;
-		$("#loadingscreen").hide(0);
 		var htmlstr = '<div class="backoption" onclick="mango1.displayWorldOptions()"></div>'
 					+ '<div class="chaptertitle" style="width:400px;margin:20px auto;text-align:center;">Choose a Level</div>'
 					+ '<div style="margin:30px auto;width:500px;">';
@@ -555,7 +556,7 @@ function mango(target, transmitCommand, uiIndex) {
 				
 		htmlstr += '</div>';
 		
-		$("#chapters").html(htmlstr).show(0);	
+		$("#chapters").html(htmlstr).show(0).animate({"left": "0px"}, self.slideTime);	
 		
 	}
 	
@@ -580,19 +581,19 @@ function mango(target, transmitCommand, uiIndex) {
 		self.reset();
 		self.startPulse();
 		
-		$("#loadingscreen").hide(0);
-		$("#chapters").hide(0);	
+		$("#chapters, #navbg").animate({"left": "-570px"}, self.slideTime);	
 		
 	}
 	
 	this.displayPause = function() {
-		$("#pause").show(0);
+		console.log("paused");
+		$("#pause, #navbg").animate({"left": "0px"}, 0);
 		self.stopPulse();
 		
 	}
 	
 	this.continuePlaying = function() {
-		$("#pause").hide(0);
+		$("#pause, #navbg").animate({"left": "-570px"}, 0);
 		self.startPulse();
 		
 	}
@@ -603,35 +604,34 @@ function mango(target, transmitCommand, uiIndex) {
 			localStorage["best"+self.level] = self.currentStroke;
 		}
 		$("#winstrokes").html(self.currentStroke);
-		$("#levelwon").show(0);
-	//	$(".backoption").show(0);
+		$("#levelwon, #navbg").animate({"left": "0px"}, self.slideTime);	;
 		
 	}
 	
 	this.displayLose = function() {
-		$("#levellost").show(0);
+		$("#levellost, #navbg").animate({"left": "0px"}, self.slideTime);	
 	}
 	
 	this.retryLevel = function() {
-		$("#pause").hide(0);
-		$("#levelwon").hide(0);
-		$("#levellost").hide(0);
+		$("#pause, #navbg").animate({"left": "-570px"}, self.slideTime);
+		$("#levelwon").animate({"left": "-570px"}, self.slideTime);
+		$("#levellost").animate({"left": "-570px"}, self.slideTime);
 		self.currentStroke = -1;
 		self.displayLevel(self.level);
 	}
 	
 	this.startNextLevel = function() {
-		$("#levelwon").hide(0);
+		$("#levelwon, #navbg").animate({"left": "-570px"}, self.slideTime)
 		self.reset(true);
 	}
 	
 	this.exitToChapters = function() {
 		self.displayChapters();
-		$("#levelwon").hide(0);
-		$("#levellost").hide(0);
-		$("#pause").hide(0);
+		$("#levelwon").animate({"left": "-570px"}, self.slideTime);
+		$("#levellost").animate({"left": "-570px"}, self.slideTime);
+		$("#pause").animate({"left": "-570px"}, self.slideTime);
 		self.reset();
-		$("#chapters").show(0);
+		$("#chapters, #navbg").animate({"left": "0px"}, self.slideTime)
 	}
 	
 	/* Create Stage */

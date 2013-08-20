@@ -31,7 +31,7 @@ function mango(target, transmitCommand, uiIndex) {
 	var gravity = 0.1;
 	var bounceLoss = -0.3; //-0.7
 	var framerate = 60;
-	var slingAffect = 12; //8 -- lower number means more speed
+	var slingAffect = 11; //8 -- lower number means more speed
 	var ballsize = 3; // 7
 	var slingSize = 40;
 	var slingThickness = ballsize;
@@ -66,6 +66,7 @@ function mango(target, transmitCommand, uiIndex) {
 	]
 	
 	this.level = 0;
+	this.defStart = { x: 100, y: 200 };
 							// layout fullsize: x=570, y=300, width=570, height=300
 	this.portalsLayouts = [
 							{
@@ -88,8 +89,7 @@ function mango(target, transmitCommand, uiIndex) {
 								hole: [
 									{ x: 350, y: 200, width: 30, height: 30, type: "hole" }
 								],
-								portals: [
-								],
+								portals: [ ],
 								tip: "After releasing the ball, touch the screen to add spin to the ball"
 							},
 							{
@@ -103,204 +103,186 @@ function mango(target, transmitCommand, uiIndex) {
 								],
 								portals: [ 
 									[
-										{ x: 100, y: 100, width: 30, height: 30, type: "in"},
+										{ x: 100, y: 100, width: 30, height: 30, type: "in", page: "1"},
 										{ x: 250, y: 200, width: 30, height: 30, type: "out"}	
 									]
 								],
 								tip: "Red portals transport the ball between them"
 							},
 							{
-								start: { x: 70, y: 210 },
+								start: { x: self.defStart.x, y: self.defStart.y },
 								walls: [
-									{ x: 120,  y: 80, width: 100, height: 10, type: "land" },
-									{ x: 220,  y: 80, width: 50, height: 10, type: "water" },
-									{ x: 270,  y: 80, width: 50, height: 10, type: "land" },
-									{ x: 320,  y: 80, width: 50, height: 10, type: "water" },
-									{ x: 370,  y: 80, width: 20, height: 10, type: "land" },
-								//	{ x: 450,  y: 50, width: 10, height: 210, type: "land" },
-									{ x: 320,  y: 160, width: 130, height: 10, type: "jump" },
-									{ x: 190,  y: 160, width: 130, height: 10, type: "land" },
-									{ x: 120,  y: 90, width: 10, height: 160, type: "land" },
-									{ x: 120,  y: 250, width: 250, height: 10, type: "ice" },
-									{ x: 10,  y: 100, width: 10, height: 150, type: "land" },
+									{ x: 350, y: 100, width: 10, height: 50, type: "land" },
+									{ x: 350, y: 150, width: 50, height: 10, type: "land" },
+									{ x: 400, y: 150, width: 10, height: 100, type: "land" },
+									{ x: 400, y: 250, width: 100, height: 10, type: "land" },
+									{ x: 400, y: 100, width: 150, height: 10, type: "land" },
+									{ x: 450, y: 150, width: 100, height: 10, type: "land" },
+									{ x: 450, y: 150, width: 10, height: 50, type: "land" },
 								],
 								hole: [
-									{ x: 410,  y: 250, width: 30, height: 30, type: "hole" }
+									{ x: 500, y: 250, width: 30, height: 30, type: "hole" }
 								],
-								portals: [ ]
+								portals: [ 
+								],
+								tip: ""
 							},
 							{
-								start: { x: 70, y: 220 },
+								start: { x: self.defStart.x, y: self.defStart.y },
 								walls: [
-									{ x: 350,  y: 100, width: 5, height: 30, type: "bridge" },
-									{ x: 350,  y: 130, width: 40, height: 5, type: "bridge" },
-									{ x: 390,  y: 100, width: 5, height: 30, type: "land" }
+									{ x: 175, y: 50, width: 10, height: 100, type: "land" },
+									{ x: 350, y: 150, width: 10, height: 100, type: "land" }
 								],
 								hole: [
-									{ x: 400,  y: 70, width: 30, height: 30, type: "hole" }
+									{ x: 450, y: 150, width: 30, height: 30, type: "hole" }
 								],
-								portals: [ ]
-							},
-							{
-								start: { x: 70, y: 220 },
-								walls: [
-									{ x: 400,  y: 250, width: 50, height: 5, type: "jump" },
-									{ x: 300,  y: 200, width: 50, height: 5, type: "bridge" },
-									{ x: 200,  y: 150, width: 50, height: 5, type: "bridge" },
-									{ x: 100,  y: 100, width: 50, height: 5, type: "bridge" }
-								],
-								hole: [
-									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							},
-							{
-								start: { x: 70, y: 220 },
-								walls: [
-									{ x: 400,  y: 100, width: 50, height: 5, type: "land" },
-									{ x: 400,  y: 20, width: 5, height: 40, type: "land" }
-								],
-								hole: [
-									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							},
-							{
-								start: { x: 50, y: 120 },
-								walls: [
-									{ x: 200,  y: 20, width: 10, height: 300, type: "land" }
-								],
-								hole: [
-									{ x: 480,  y: 220, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							},
-							
-							{
-								start: { x: 80, y: 220 },
-								walls: [
-									{ x: 10, y: 230, width: 460, height: 5, type: "land" }
-								],
-								hole: [
-									{ x: 470, y: 230, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
-							},
-							{
-								start: { x: 80, y: 220 },
-								walls: [
-									{ x: 10, y: 230, width: 550, height: 10, type: "land" },
-									{ x: 230, y: 130, width: 100, height: 100, type: "land" }
-								],
-								hole: [
-									{ x: 350, y: 200, width: 30, height: 30, type: "hole" }
-								],
-								portals: [
+								portals: [ 
 									[
-										{ x: 150, y: 100, width: 30, height: 30, type: "in"},
-										{ x: 350, y: 100, width: 30, height: 30, type: "out"}	
+										{ x: 85, y: 130, width: 30, height: 30, type: "in"},
+										{ x: 250, y: 200, width: 30, height: 30, type: "out"}	
+									],
+									[
+										{ x: 250, y: 150, width: 30, height: 30, type: "in"},
+										{ x: 450, y: 200, width: 30, height: 30, type: "out"}	
 									]
-								]
+								],
+								tip: ""
 							},
 							{
-								start: { x: 80, y: 220 },
+								start: { x: self.defStart.x, y: self.defStart.y },
 								walls: [
-									{ x: 10, y: 230, width: 400, height: 10, type: "land" },
-									{ x: 230, y: 130, width: 100, height: 100, type: "land" },
-									{ x: 400, y: 30, width: 10, height: 130, type: "land" },
-									{ x: 410, y: 230, width: 100, height: 10, type: "jump" }
+									{ x: 200, y: 50, width: 10, height: 200, type: "land" },
+									{ x: 340, y: 250, width: 60, height: 10, type: "jump" }
 								],
 								hole: [
 									{ x: 450, y: 50, width: 30, height: 30, type: "hole" }
 								],
-								portals: [ ]
+								portals: [ 
+									[
+										{ x: 125, y: 100, width: 30, height: 30, type: "in"},
+										{ x: 250, y: 50, width: 30, height: 30, type: "out"}	
+									]
+								],
+								tip: ""
 							},
 							{
-								start: { x: 70, y: 210 },
+								start: { x: self.defStart.x, y: self.defStart.y },
 								walls: [
-									{ x: 120,  y: 80, width: 100, height: 10, type: "land" },
-									{ x: 220,  y: 80, width: 50, height: 10, type: "water" },
-									{ x: 270,  y: 80, width: 50, height: 10, type: "land" },
-									{ x: 320,  y: 80, width: 50, height: 10, type: "water" },
-									{ x: 370,  y: 80, width: 20, height: 10, type: "land" },
-								//	{ x: 450,  y: 50, width: 10, height: 210, type: "land" },
-									{ x: 320,  y: 160, width: 130, height: 10, type: "jump" },
-									{ x: 190,  y: 160, width: 130, height: 10, type: "land" },
-									{ x: 120,  y: 90, width: 10, height: 160, type: "land" },
-									{ x: 120,  y: 250, width: 250, height: 10, type: "ice" },
-									{ x: 10,  y: 100, width: 10, height: 150, type: "land" },
+									{ x: 135, y: 100, width: 10, height: 100, type: "land" },
+									{ x: 30, y: 70, width: 10, height: 70, type: "land" },
+									{ x: 30, y: 140, width: 60, height: 10, type: "land" }
 								],
 								hole: [
-									{ x: 410,  y: 250, width: 30, height: 30, type: "hole" }
+									{ x: 400, y: 170, width: 30, height: 30, type: "hole" }
 								],
-								portals: [ ]
+								portals: [ 
+								],
+								tip: ""
 							},
 							{
-								start: { x: 70, y: 220 },
+								start: { x: self.defStart.x, y: self.defStart.y },
 								walls: [
-									{ x: 350,  y: 100, width: 5, height: 30, type: "bridge" },
-									{ x: 350,  y: 130, width: 40, height: 5, type: "bridge" },
-									{ x: 390,  y: 100, width: 5, height: 30, type: "land" }
+									{ x: 360, y: 50, width: 10, height: 200, type: "land" },
+									{ x: 70, y: 40, width: 300, height: 10, type: "land" },
+									{ x: 260, y: 170, width: 100, height: 10, type: "land" },
+									{ x: 260, y: 170, width: 10, height: 80, type: "land" },
+									{ x: 260, y: 250, width: 40, height: 10, type: "land" },
+									{ x: 330, y: 250, width: 40, height: 10, type: "land" },
+									{ x: 400, y: 150, width: 30, height: 10, type: "land" },
 								],
 								hole: [
-									{ x: 400,  y: 70, width: 30, height: 30, type: "hole" }
+									{ x: 300, y: 250, width: 30, height: 30, type: "hole" }
 								],
-								portals: [ ]
+								portals: [ 
+									[
+										{ x: 300, y: 100, width: 30, height: 30, type: "in"},
+										{ x: 400, y: 100, width: 30, height: 30, type: "out"}	
+									],
+									[
+										{ x: 300, y: 140, width: 30, height: 30, type: "in"},
+										{ x: 500, y: 140, width: 30, height: 30, type: "out"}	
+									],
+									[
+										{ x: 400, y: 180, width: 30, height: 30, type: "in"},
+										{ x: 300, y: 180, width: 30, height: 30, type: "out"}	
+									]
+								],
+								tip: ""
 							},
 							{
-								start: { x: 70, y: 220 },
+								start: { x: self.defStart.x, y: self.defStart.y },
 								walls: [
-									{ x: 400,  y: 250, width: 50, height: 5, type: "jump" },
-									{ x: 300,  y: 200, width: 50, height: 5, type: "bridge" },
-									{ x: 200,  y: 150, width: 50, height: 5, type: "bridge" },
-									{ x: 100,  y: 100, width: 50, height: 5, type: "bridge" }
+									{ x: 250, y: 150, width: 310, height: 10, type: "land" },
+									{ x: 250, y: 150, width: 10, height: 100, type: "land" },
+									{ x: 550, y: 50, width: 10, height: 100, type: "land" },
 								],
 								hole: [
-									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
+									{ x: 475, y: 225, width: 30, height: 30, type: "hole" }
 								],
-								portals: [ ]
+								portals: [ 
+									[
+										{ x: 300, y: 100, width: 30, height: 30, type: "in"},
+										{ x: 300, y: 225, width: 30, height: 30, type: "out"}	
+									]
+								],
+								tip: ""
 							},
 							{
-								start: { x: 70, y: 220 },
+								start: { x: self.defStart.x, y: self.defStart.y },
 								walls: [
-									{ x: 400,  y: 100, width: 50, height: 5, type: "land" },
-									{ x: 400,  y: 20, width: 5, height: 40, type: "land" }
+									{ x: 150, y: 200, width: 50, height: 10, type: "jump" },
+									{ x: 250, y: 220, width: 50, height: 10, type: "jump" },
+									{ x: 350, y: 240, width: 50, height: 10, type: "jump" },
+									{ x: 220, y: 100, width: 10, height: 110, type: "land" },
+									{ x: 320, y: 120, width: 10, height: 110, type: "land" },
+									{ x: 420, y: 140, width: 10, height: 110, type: "land" },
+									{ x: 130, y: 40, width: 100, height: 10, type: "land" },
+									{ x: 230, y: 40, width: 100, height: 10, type: "land" },
+									{ x: 330, y: 40, width: 100, height: 10, type: "land" },
+									{ x: 430, y: 40, width: 140, height: 10, type: "land" },
 								],
 								hole: [
-									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
+									{ x: 500, y: 170, width: 30, height: 30, type: "hole" }
 								],
-								portals: [ ]
+								portals: [ 
+									[
+										{ x: 390, y: 140, width: 30, height: 30, type: "in"},
+										{ x: 500, y: 200, width: 30, height: 30, type: "out"}	
+									]
+								],
+								tip: ""
 							},
 							{
-								start: { x: 50, y: 120 },
+								start: { x: self.defStart.x, y: self.defStart.y },
 								walls: [
-									{ x: 200,  y: 20, width: 10, height: 300, type: "land" }
+									{ x: 200, y: 100, width: 100, height: 10, type: "land" },
+									{ x: 300, y: 100, width: 50, height: 10, type: "water" },
+									{ x: 350, y: 100, width: 150, height: 10, type: "land" },
+									{ x: 200, y: 100, width: 10, height: 50, type: "land" },
+									{ x: 500, y: 100, width: 10, height: 50, type: "land" },
+									{ x: 200, y: 150, width: 230, height: 10, type: "land" },
+									{ x: 460, y: 150, width: 50, height: 10, type: "land" },
 								],
 								hole: [
-									{ x: 480,  y: 220, width: 30, height: 30, type: "hole" }
+									{ x: 430, y: 150, width: 30, height: 30, type: "hole" },
 								],
-								portals: [ ]
+								portals: [ 
+								],
+								tip: ""
 							},
 							{
-								start: { x: 70, y: 220 },
+								start: { x: self.defStart.x, y: self.defStart.y },
 								walls: [
-									{ x: 400,  y: 100, width: 50, height: 5, type: "land" },
-									{ x: 400,  y: 20, width: 5, height: 40, type: "land" }
+									{ x: 200, y: 100, width: 100, height: 10, type: "ice" },
+									{ x: 200, y: 100, width: 10, height: 150, type: "land" },
+									{ x: 260, y: 250, width: 240, height: 10, type: "ice" },
 								],
 								hole: [
-									{ x: 480,  y: 70, width: 30, height: 30, type: "hole" }
+									{ x: 230, y: 250, width: 30, height: 30, type: "hole" },
 								],
-								portals: [ ]
-							}, 
-							{
-								start: { x: 50, y: 120 },
-								walls: [
-									{ x: 200,  y: 20, width: 10, height: 300, type: "land" }
+								portals: [ 
 								],
-								hole: [
-									{ x: 480,  y: 220, width: 30, height: 30, type: "hole" }
-								],
-								portals: [ ]
+								tip: ""
 							}
 	]
     
@@ -308,10 +290,23 @@ function mango(target, transmitCommand, uiIndex) {
 							{
 								start: { x: 80, y: 220 },
 								walls: [
-									{ x: 10, y: 230, width: 460, height: 5, type: "land" }
+									{ x: 400, y: 230, width: 100, height: 10, type: "land" },
+									{ x: 400, y: 80, width: 10, height: 40, type: "bridge" }
 								],
 								hole: [
-									{ x: 470, y: 100, width: 30, height: 30, type: "hole" }
+									{ x: 500, y: 60, width: 30, height: 30, type: "hole" }
+								],
+								portals: [ ]
+							},
+							{
+								start: { x: 80, y: 220 },
+								walls: [
+									{ x: 150, y: 230, width: 50, height: 10, type: "bridge" },
+									{ x: 250, y: 230, width: 50, height: 10, type: "bridge" },
+									{ x: 350, y: 230, width: 50, height: 10, type: "bridge" }
+								],
+								hole: [
+									{ x: 450, y: 230, width: 30, height: 30, type: "hole" }
 								],
 								portals: [ ]
 							}
@@ -489,15 +484,18 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	/* Display Pages */
 	
+	this.slideTime = 500;
+	
 	this.displaySplash = function() {
-		$("#loadingscreen").show(0);
-		$("#worlds").hide(0);
+		$("#loadingscreen").animate({"left": "0px"}, self.slideTime);
+	//	$("#worlds").hide(0);
 	}
 	
 	this.displayWorldOptions = function() {
-		$("#loadingscreen").hide(0);
-		$("#chapters").hide(0);
-		$("#worlds").show(0);
+		$("#loadingscreen").animate({"left": "-570px"}, self.slideTime);
+		$("#chapters").animate({"left": "570px"}, self.slideTime);
+		$("#worlds").show(0).animate({"left": "0px"}, self.slideTime);
+		$("#navbg").show(0).animate({"left": "0px"}, self.slideTime);
 	}
 	
 	this.openWorld = function(whichworld) {
@@ -512,17 +510,16 @@ function mango(target, transmitCommand, uiIndex) {
 				self.allLayouts = self.holeinoneLayouts;
 				break;
 		}
-		$("#worlds").hide(0);
+		$("#worlds").animate({"left": "-570px"}, self.slideTime);
 		self.displayChapters();
 	}
 	
 	this.displayChapters = function() {
 	
 		var lastOpenLevelFound = false;
-		$("#loadingscreen").hide(0);
 		var htmlstr = '<div class="backoption" onclick="mango1.displayWorldOptions()"></div>'
-					+ '<div class="chaptertitle" style="width:400px;margin:20px auto;text-align:center;">Choose a Level</div>'
-					+ '<div style="margin:30px auto;width:500px;">';
+					+ '<div class="navtitle chaptertitle">Choose a Level</div>'
+					+ '<div style="margin:10px auto;width:500px;">';
 		for (var i=0;i<self.allLayouts.length;i++) {
 			if (localStorage["best"+i]!="none" || !lastOpenLevelFound) {
 				if (localStorage["best"+i]=="none") {
@@ -538,7 +535,7 @@ function mango(target, transmitCommand, uiIndex) {
 				htmlstr	+= '</div>'
 						+ '</div>';
 			} else if (localStorage["best"+i]=="none") {
-				htmlstr += '<div class="chapterbuttonoutline" style="opacity:0.5">'
+				htmlstr += '<div class="chapterbuttonoutline2">'
 						+ '<div class="chapterbutton"">'
 						+ (i+1)
 					    + '<div style="font-size:9pt">_</div>'
@@ -555,7 +552,7 @@ function mango(target, transmitCommand, uiIndex) {
 				
 		htmlstr += '</div>';
 		
-		$("#chapters").html(htmlstr).show(0);	
+		$("#chapters").html(htmlstr).show(0).animate({"left": "0px"}, self.slideTime);	
 		
 	}
 	
@@ -580,19 +577,19 @@ function mango(target, transmitCommand, uiIndex) {
 		self.reset();
 		self.startPulse();
 		
-		$("#loadingscreen").hide(0);
-		$("#chapters").hide(0);	
+		$("#chapters, #navbg").animate({"left": "-570px"}, self.slideTime);	
 		
 	}
 	
 	this.displayPause = function() {
-		$("#pause").show(0);
+		console.log("paused");
+		$("#pause, #navbg").animate({"left": "0px"}, 0);
 		self.stopPulse();
 		
 	}
 	
 	this.continuePlaying = function() {
-		$("#pause").hide(0);
+		$("#pause, #navbg").animate({"left": "-570px"}, 0);
 		self.startPulse();
 		
 	}
@@ -603,35 +600,34 @@ function mango(target, transmitCommand, uiIndex) {
 			localStorage["best"+self.level] = self.currentStroke;
 		}
 		$("#winstrokes").html(self.currentStroke);
-		$("#levelwon").show(0);
-	//	$(".backoption").show(0);
+		$("#levelwon, #navbg").animate({"left": "0px"}, self.slideTime);	;
 		
 	}
 	
 	this.displayLose = function() {
-		$("#levellost").show(0);
+		$("#levellost, #navbg").animate({"left": "0px"}, self.slideTime);	
 	}
 	
 	this.retryLevel = function() {
-		$("#pause").hide(0);
-		$("#levelwon").hide(0);
-		$("#levellost").hide(0);
+		$("#pause, #navbg").animate({"left": "-570px"}, self.slideTime);
+		$("#levelwon").animate({"left": "-570px"}, self.slideTime);
+		$("#levellost").animate({"left": "-570px"}, self.slideTime);
 		self.currentStroke = -1;
 		self.displayLevel(self.level);
 	}
 	
 	this.startNextLevel = function() {
-		$("#levelwon").hide(0);
+		$("#levelwon, #navbg").animate({"left": "-570px"}, self.slideTime)
 		self.reset(true);
 	}
 	
 	this.exitToChapters = function() {
 		self.displayChapters();
-		$("#levelwon").hide(0);
-		$("#levellost").hide(0);
-		$("#pause").hide(0);
+		$("#levelwon").animate({"left": "-570px"}, self.slideTime);
+		$("#levellost").animate({"left": "-570px"}, self.slideTime);
+		$("#pause").animate({"left": "-570px"}, self.slideTime);
 		self.reset();
-		$("#chapters").show(0);
+		$("#chapters, #navbg").animate({"left": "0px"}, self.slideTime)
 	}
 	
 	/* Create Stage */
@@ -762,13 +758,13 @@ function mango(target, transmitCommand, uiIndex) {
 				fillStyle = "#faa";
 				fillRect(curPortalIn.x,curPortalIn.y, curPortalIn.width, curPortalIn.height/3);
 				fillRect(curPortalOut.x,curPortalOut.y, curPortalOut.width, curPortalOut.height/3);
-				globalAlpha = 0.6;
+				globalAlpha = 1;
 				fillStyle = "#fff";
 				textAlign = "center";
-				font="20px courier";
+				font="bold 8px courier";
 				textBaseline = "middle";
-				fillText(i+1,curPortalIn.x+curPortalIn.width/2,curPortalIn.y+curPortalIn.height/2);
-				fillText(i+1,curPortalOut.x+curPortalOut.width/2,curPortalOut.y+curPortalOut.height/2);
+				fillText("in",curPortalIn.x+curPortalIn.width/2,curPortalIn.y+curPortalIn.height/2);
+				fillText("out",curPortalOut.x+curPortalOut.width/2,curPortalOut.y+curPortalOut.height/2);
 				globalAlpha = 1;
 			}
 		}
@@ -901,7 +897,7 @@ function mango(target, transmitCommand, uiIndex) {
 	
 	this.drawSling = function() {
 		with (self.context) {
-			globalAlpha = 0.8;
+			globalAlpha = 1;
 			
 			//guide circle
 			beginPath();
@@ -981,6 +977,12 @@ function mango(target, transmitCommand, uiIndex) {
 			
 			globalAlpha = 1;
 		}
+		
+		
+		
+		this.setBlockIndeces = function() {
+			for (var i=0;i>self.CurrentBlocks.length;i++)
+		}
 	}
 	
 	this.startShot = function() {
@@ -1011,7 +1013,7 @@ function mango(target, transmitCommand, uiIndex) {
 		this.draw = function() {
 			if (!block.hit) {
 				with (mango1.context) {
-					globalAlpha = 0.8;
+					globalAlpha = 1;
 					switch (block.type) {
 						case "land":
 						//	fillStyle = mango1.skins[0].land;
@@ -1065,6 +1067,7 @@ function mango(target, transmitCommand, uiIndex) {
 		this.spin = 0;
 		this.spinRotation = 0;
 		this.friction = 0.8;
+		this.hasBounced = false;
 		
 		this.reInit = function() {
 			
@@ -1079,6 +1082,7 @@ function mango(target, transmitCommand, uiIndex) {
 			this.deltay = 1;
 			this.echoes = new Array();
 			this.echopace = 0;
+			this.hasBounced = false;
 			
 		}
 		
@@ -1089,17 +1093,17 @@ function mango(target, transmitCommand, uiIndex) {
 			
 			this.deltay = this.deltay + gravity;
 			
-			if (self.clickedR) {
+			if (self.clickedR && !this.hasBounced) {
 				this.deltax -= clickChange;
 				this.spin -= clickChange*6;
-			} else if (self.clickedL) {
+			} else if (self.clickedL && !this.hasBounced) {
 				this.deltax += clickChange;	
 				this.spin += clickChange*6;
 			}
 			
 			//movement
-			this.x += this.deltax;
-			this.y += this.deltay;
+		//	this.x += this.deltax;
+		//	this.y += this.deltay;
 			
 			//bounce check (borders)
 		//	if (this.y>(this.space.y2-this.size-2) || this.y<(this.space.y+this.size+2) ) {
@@ -1262,6 +1266,12 @@ function mango(target, transmitCommand, uiIndex) {
 				
 			}
 			
+			
+			
+			//movement
+			this.x += this.deltax;
+			this.y += this.deltay;
+			
 			//add echo
 			if (echoesOn) {
 				this.echopace++;
@@ -1278,6 +1288,8 @@ function mango(target, transmitCommand, uiIndex) {
 		}
 		
 		this.bounce = function(axis, hitblock) {
+			
+			this.hasBounced = true;
 			
 		//	self.ballStopped();
 		//	current
@@ -1306,13 +1318,16 @@ function mango(target, transmitCommand, uiIndex) {
 		
 			switch (hitblock.type) {
 				case "ice":
-					this.deltax = (dream(10)-5);
+					if (Math.abs(this.deltay)>0.2) {
+						this.deltax = (dream(9)-4);
+					}
 					break;
 				case "jump":
 					this.deltay -= 4;
 					break;
 				case "bridge":
-					self.CurrentBlocks.splice(hitblock.SelfIndex,1);
+				//	self.CurrentBlocks.splice(hitblock.SelfIndex,1);
+					self.CurrentBlocks[hitblock.SelfIndex].type = "none";
 					break;
 				case "water":
 				
@@ -1327,11 +1342,12 @@ function mango(target, transmitCommand, uiIndex) {
 				if (Math.abs(this.deltay)<0.2 && Math.abs(this.deltax)<0.1) {
 					this.deltax=0;
 					this.deltay=-.2;
+					this.y-=2;
 					self.ballStopped();
 				} else {
 					if (Math.abs(this.deltay)<0.2) {
 					//	this.deltax=0;
-						this.deltay=-.4;
+						this.deltay=-.3;
 					//	self.ballStopped();
 					}
 				}

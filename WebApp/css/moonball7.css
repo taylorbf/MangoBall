@@ -1,0 +1,266 @@
+
+	 	@font-face {
+			font-family: 'Poiret One';
+			src: url('../fonts/Poiret_One/PoiretOne-Regular.ttf');
+		}
+	 	@font-face {
+			font-family: 'Inconsolata';
+			src: url('../fonts/Inconsolata/Inconsolata-Regular.ttf')
+		}
+		@font-face {
+			font-family: 'Text Me One';
+			src: url('../fonts/Text_Me_One/TextMeOne-Regular.ttf')
+		}
+		@font-face {
+			font-family: 'Geo';
+			src: url('../fonts/Geo/Geo-Regular.ttf')
+		}
+	
+		body {
+			margin:0;
+			padding:0;
+			background-color:black;
+  			font-family: 'Poiret One', sans-serif;
+  			width:570px;
+  			height:300px;
+  			overflow:hidden;
+		}
+		#iphone_cont {
+			margin:0;
+			padding:0;
+			background-color:black;
+  			overflow:hidden;
+		}
+		.fullsize {
+			position:absolute;
+			left:0px;
+			top:0px;
+			width:570px;
+			height:300px;
+		}
+		
+		.screen { 
+			background-image:url(../images/screen_bg7.jpg);
+		}
+		
+		canvas {
+			position:absolute;
+			left:0px;
+			top:0px;
+			width:570px;
+			height:300px;
+		}
+		
+		.navtitle {
+			width:500px;
+			padding:20px 10px;
+			text-align:center;
+		}
+		
+		#chapters {
+			left:570px;
+		//	background-image:url(../images/screen_bg7.jpg);
+		}
+		
+		.chaptertitle {
+			color:white;	
+			font-size:30pt;
+		}
+		
+		.chapterbuttonoutline {
+			background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.33, rgb(14,173,223)), color-stop(0.67, rgb(0,210,255)));
+			background-image: -moz-linear-gradient(center bottom, rgb(14,173,223) 33%, rgb(0,210,255) 67% );
+			padding: 4px;
+			float:left;
+			margin: 5px 10px 10px 10px;
+			border-radius:8px;
+			-moz-border-radius:8px;
+			-webkit-border-radius:8px;
+		}
+		
+		.chapterbuttonoutline2 {
+			background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.33, rgb(50,50,50)), color-stop(0.67, rgb(100,100,100)));
+			background-image: -moz-linear-gradient(center bottom, rgb(50,50,50) 33%, rgb(100,100,100) 67% );
+			padding: 4px;
+			float:left;
+			margin: 5px 10px 10px 10px;
+			border-radius:8px;
+			-moz-border-radius:8px;
+			-webkit-border-radius:8px;
+		}
+		
+		
+		.chapterbuttonoutline:hover {
+			opacity:0.7;	
+		}
+		
+		.chapterbutton {
+			font-size:14pt;
+			padding:5px 5px;
+			background-color:#000;
+			color:white;
+			font-weight:bold;
+			border-radius:5px;
+			-moz-border-radius:5px;
+			-webkit-border-radius:5px;
+			width:45px;
+			text-align:center;
+		}
+		
+		#pause {
+			position:absolute;
+			opacity:0.95;
+			font-size:30pt;
+			text-align:center;
+			left:-570px;
+			color:white;
+		}
+		
+		#pausebutton {
+			position:absolute;
+			top:5px;
+			left:5px;
+			width:40px;
+			height:40px;
+			background-image:url(../images/icon_pause.png);
+			z-index:4;
+		}
+		
+		#levelwon, #levellost {
+			left:-570px;
+			font-size:20pt;
+			text-align:center;
+			color:white;
+			position:absolute;
+			z-index:5;
+		}
+		
+		#gametips {
+			position:absolute;
+		//	top:240px;
+			top:0px;
+			left:55px;
+		//	background-color:black;
+			height:40px;
+			width:520px;
+			color:white;
+			font-size:12pt;
+			padding:7px;
+		}
+		
+		
+		#loadingscreen {
+			z-index:10;
+		}
+		
+		#worlds {
+			z-index:9;
+		}
+		
+		#chapters {
+			z-index:8;
+		}
+		
+		#navbg {
+			z-index:4;
+		}
+		
+		#pause {
+			z-index:5;
+		}
+		
+		
+		/* WORLD */
+		
+			
+		#worlds {
+			color:white;	
+			font-size:30pt;
+		}
+		
+		.worldoption {
+			float:left;
+			margin:0px 20px;
+			font-size:17pt;
+			text-align:center;
+		}
+		
+		.worldoption img {
+			border-radius:10px;
+			-moz-border-radius:10px;
+			-webkit-border-radius:10px;
+			border:solid 3px #ccc;
+			margin-top:5px;
+			height:121px;
+			background-color:#111;
+			padding:3px
+		}
+		
+		.worldoption:hover {
+			opacity:0.8;
+		}
+		 
+		
+		/* */
+		
+			
+		.screenbuttons {
+			width:520px;
+			margin:20px auto;
+		}
+		
+		.screenoption {
+			width:150px;
+			float:left;
+			margin:10px;
+		}
+		
+		.screenoption:hover {
+			opacity:0.7;	
+		}
+		
+		.optionicon {
+			width:40px;
+			display:block;
+			margin:0 auto;
+		}
+		
+		.optiontext {
+			background-color:black;
+			border-radius:8px;
+			-webkit-border-radius:8px;
+			-moz-border-radius:8px;
+			padding:3px 15px;
+			font-size:16pt;
+			color:white;
+		}
+		
+		.forwardoption {
+			width:75px;
+			margin:20px auto;
+		}
+		
+		.retryoption {
+			width:70px;
+			margin:8px auto 9px;
+		}
+		
+		.chaptersoption {
+			width:90px;
+			margin:10px auto;
+		}
+		
+		.backoption {
+		/*	position:absolute;
+			top:10px;
+			left:10px; */
+			float:left;
+			width:50px;
+			height:50px;
+			background-image:url(../images/icon_back.png);
+			display:block;
+			margin:10px;
+		}
+		
+	
+		

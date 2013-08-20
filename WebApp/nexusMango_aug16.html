@@ -1,0 +1,330 @@
+<!doctype html>  
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>MoonBall</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="nexusUI.js"></script>
+<!-- attach	-- edit needed
+	<script type="text/javascript" src="moonputt2.js"></script> -->
+<!-- scroll horiz bounce	
+	<script type="text/javascript" src="nexusMango15.js"></script> -->
+<!-- moon putt is moonputt2.js, with scroll is current--->
+	<script type="text/javascript" src="moonputt6.js"></script> -->
+<!-- sling
+	<script type="text/javascript" src="sling1.js"></script> -->
+</head>
+<body>
+
+	<style>
+	
+	 	@font-face {
+			font-family: 'Poiret One';
+			src: url('fonts/Poiret_One/PoiretOne-Regular.ttf');
+		}
+	 	@font-face {
+			font-family: 'Inconsolata';
+			src: url('fonts/Inconsolata/Inconsolata-Regular.ttf')
+		}
+		@font-face {
+			font-family: 'Text Me One';
+			src: url('fonts/Text_Me_One/TextMeOne-Regular.ttf')
+		}
+		@font-face {
+			font-family: 'Geo';
+			src: url('fonts/Text_Me_One/Geo-Regular.ttf')
+		}
+	
+		body {
+			margin:0;
+			padding:0;
+			background-color:black;
+  			font-family: 'Poiret One', sans-serif;
+  			width:570px;
+  			height:300px;
+  			overflow:hidden;
+		}
+		.fullsize {
+			position:absolute;
+			left:0px;
+			top:0px;
+			width:570px;
+			height:300px;
+		}
+		.screen { 
+			background-image:url(images/screen_bg7.jpg);
+		}
+		canvas {
+			position:absolute;
+			left:0px;
+			top:0px;
+			width:570px;
+			height:300px;
+		}
+		
+		#chapters {
+			display:none;
+			background-color:#eee;
+			background-image:url(images/screen_bg7.jpg);
+		}
+		
+		.chaptertitle {
+			color:white;	
+			font-size:20pt;
+			margin:20px;
+		}
+		
+		.chapterbuttonoutline {
+			background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.33, rgb(14,173,223)), color-stop(0.67, rgb(0,210,255)));
+			background-image: -moz-linear-gradient(center bottom, rgb(14,173,223) 33%, rgb(0,210,255) 67% );
+			padding: 4px;
+			float:left;
+			margin: 5px 10px 10px 10px;
+			border-radius:8px;
+			-moz-border-radius:8px;
+			-webkit-border-radius:8px;
+		}
+		
+		
+		.chapterbuttonoutline:hover {
+			opacity:0.7;	
+		}
+		
+		.chapterbutton {
+			font-size:14pt;
+			padding:5px 5px;
+			background-color:#000;
+			color:white;
+			font-weight:bold;
+			border-radius:5px;
+			-moz-border-radius:5px;
+			-webkit-border-radius:5px;
+			width:45px;
+			text-align:center;
+		}
+		
+		#pause {
+			opacity:0.95;
+			background-color:#eee;
+			font-size:30pt;
+			text-align:center;
+			display:none;
+			color:white;
+		}
+		
+		#pausebutton {
+			position:absolute;
+			top:5px;
+			left:5px;
+			width:40px;
+			height:40px;
+			background-image:url(images/icon_pause.png);
+		}
+		
+		#levelwon, #levellost {
+			display:none;
+			background-color:#eee;
+			font-size:20pt;
+			text-align:center;
+			color:white;
+		}
+		
+		#gametips {
+			position:absolute;
+		//	top:240px;
+			top:0px;
+			left:55px;
+		//	background-color:black;
+			height:40px;
+			width:520px;
+			color:white;
+			font-size:12pt;
+			padding:7px;
+		}
+		
+	</style>
+	
+	
+	<div class="fullsize" style="color:#333;font-size:30pt;text-align:center;padding-top:120px;font-family:gill sans">loading...</div>
+
+	<!-- in-game screen -->
+	<canvas nx="mango" class="fullsize">Error</canvas>
+	<div id="pausebutton" onclick="mango1.displayPause()"></div>
+	<div id="gametips">Strokes   <br>Best Score </div>
+	
+	<!-- other screens -->
+	<img id="loadingscreen" class="fullsize" src="images/splash4.png" style="position:absolute;top:0px;left:0px;" onclick="mango1.displayWorldOptions()" />
+	
+	<div id="chapters" class="fullsize screen"></div>
+	
+	
+	
+	<style>
+		
+		#worlds {
+			color:white;	
+			font-size:30pt;
+			text-align:center;
+		}
+		
+		.worldoption {
+			float:left;
+			margin:15px 41px;
+			font-size:17pt;
+			text-align:center;
+		}
+		
+		.worldoption img {
+			border-radius:10px;
+			-moz-border-radius:10px;
+			-webkit-border-radius:10px;
+			border:solid 3px #ccc;
+			height:84px;
+			margin-top:5px;
+			background-color:#111;
+		}
+		
+		.worldoption:hover {
+			opacity:0.8;
+		}
+		 
+		
+	</style>
+	
+    
+	<!-- worlds -->
+	<div id="worlds" class="fullsize screen" style="display:none">
+		<div class="backoption" onclick="mango1.displaySplash()">
+         <!--   <img src="images/icon_back.png"> -->
+        </div>
+		<br>
+		Worlds<br>
+		<div class="screenbuttons">
+			<div class="worldoption" onclick="mango1.openWorld('portals')">
+				Portals<br>
+				<img src="images/g_portals.png">
+			</div>
+			<div class="worldoption" onclick="mango1.openWorld('bridges')">
+				Bridges<br>
+				<img src="images/g_bridges.png">
+			</div>
+			<div class="worldoption" onclick="mango1.openWorld('holeinone')">
+				Hole-in-1<br>
+				<img src="images/g_holein1.png">
+			</div>
+		</div>
+		
+	</div>
+	
+	<style>
+		
+		.screenbuttons {
+			width:520px;
+			margin:20px auto;
+		}
+		
+		.screenoption {
+			width:150px;
+			float:left;
+			margin:10px;
+		}
+		
+		.screenoption:hover {
+			opacity:0.7;	
+		}
+		
+		.optionicon {
+			width:40px;
+			display:block;
+			margin:0 auto;
+		}
+		
+		.optiontext {
+			background-color:black;
+			border-radius:8px;
+			-webkit-border-radius:8px;
+			-moz-border-radius:8px;
+			padding:3px 15px;
+			font-size:16pt;
+			color:white;
+		}
+		
+		.forwardoption {
+			width:75px;
+			margin:20px auto;
+		}
+		
+		.retryoption {
+			width:70px;
+			margin:8px auto 9px;
+		}
+		
+		.chaptersoption {
+			width:90px;
+			margin:10px auto;
+		}
+		
+		.backoption {
+		/*	position:absolute;
+			top:10px;
+			left:10px; */
+			float:left;
+			width:50px;
+			height:50px;
+			background-image:url(images/icon_back.png);
+			display:block;
+		}
+		
+	</style>
+	
+	<div id="pause" class="fullsize screen">
+		<br>
+		Paused<br>
+		<div class="screenbuttons">
+			<div class="screenoption" onclick="mango1.retryLevel()">
+				<img class="optionicon retryoption" src="images/icon_retry.png" />
+				<div class="optiontext">Retry Level</div>
+			</div>
+			<div class="screenoption" onclick="mango1.exitToChapters()">
+				<img class="optionicon chaptersoption" src="images/icon_chapters.png" />
+				<div class="optiontext">Choose Level</div>
+			</div>
+			<div class="screenoption" onclick="mango1.continuePlaying()">
+				<img class="optionicon forwardoption" src="images/icon_forward.png" />
+				<div class="optiontext">Continue</div>
+			</div>
+		</div>
+		<div class="backoption" onclick="mango1.exitToChapters()"></div>
+	</div>
+	
+	<div id="levellost" class="fullsize screen">
+		<br>
+		You lost!<br><br>
+		<div onclick="mango1.retryLevel()">Try Again</div>
+		<div onclick="mango1.exitToChapters()">Exit Level</div>
+	</div>
+	
+	<div id="levelwon" class="fullsize screen">
+		<br>
+		Level completed in <span id="winstrokes"></span> strokes<br><br>
+		<div class="screenbuttons">
+			<div class="screenoption" onclick="mango1.retryLevel()">
+				<img class="optionicon retryoption" src="images/icon_retry.png" />
+				<div class="optiontext">Retry Level</div>
+			</div>
+			<div class="screenoption" onclick="mango1.exitToChapters()">
+				<img class="optionicon chaptersoption" src="images/icon_chapters.png" />
+				<div class="optiontext">Choose Level</div>
+			</div>
+			<div class="screenoption" onclick="mango1.startNextLevel()">
+				<img class="optionicon forwardoption" src="images/icon_forward.png" />
+				<div class="optiontext">Next Level</div>
+			</div>
+		</div>
+		<div class="backoption" onclick="mango1.exitToChapters()"></div>
+	</div>
+	
+
+</body>
+</html>
