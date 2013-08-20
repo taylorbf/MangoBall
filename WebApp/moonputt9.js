@@ -981,7 +981,9 @@ function mango(target, transmitCommand, uiIndex) {
 		
 		
 		this.setBlockIndeces = function() {
-			for (var i=0;i>self.CurrentBlocks.length;i++)
+			for (var i=0;i<self.CurrentBlocks.length;i++) {
+				self.CurrentBlocks[i].SelfIndex = i;
+			}
 		}
 	}
 	
@@ -1326,8 +1328,9 @@ function mango(target, transmitCommand, uiIndex) {
 					this.deltay -= 4;
 					break;
 				case "bridge":
-				//	self.CurrentBlocks.splice(hitblock.SelfIndex,1);
-					self.CurrentBlocks[hitblock.SelfIndex].type = "none";
+					self.CurrentBlocks.splice(hitblock.SelfIndex,1);
+					self.setBlockIndeces();
+				//	self.CurrentBlocks[hitblock.SelfIndex].type = "none";
 					break;
 				case "water":
 				
